@@ -1,47 +1,45 @@
 import { Component, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, Navigate } from "react-router-dom";
+import apiClient from "../services/api";
 import { Stack, Box, TextField, Button, CircularProgress } from "@mui/material";
 import "../styles/global.css";
 import "../styles/routes/login/view.css";
 
 import React from "react";
 
-export default function LoginView() {
+export default function LoginView(props) {
 	let [email, setEmail] = useState("");
 	let [password, setPassword] = useState("");
 	let [error, setError] = useState("");
+	let [isLoggedIn, setIsLoggedIn] = useState(false);
 	let [loading, setLoading] = useState(false);
 	let postData = () => {
 		setLoading(true);
-		axios.defaults.withCredentials = true;
-		axios.get(`http://localhost:8000/sanctum/csrf-cookie`).then((res) => {
-			axios
-				.post(
-					`http://localhost:8000/api/login`,
-					{
-						email,
-						password,
-					},
-					{
-						xsrfHeaderName: "X-XSRF-TOKEN",
-						withCredentials: true,
-					}
-				)
+		apiClient.get(`http://localhost:8000/sanctum/csrf-cookie`).then((res) => {
+			apiClient
+				.post(`http://localhost:8000/api/login`, {
+					email,
+					password,
+				})
 				.catch((e) => {
 					setError(e.message);
 					setLoading(false);
 				})
 				.then((response) => {
-					console.log(response);
+					console.log(response.data);
 					setLoading(false);
+					props.setUser(response.data);
+					props.login();
+					setIsLoggedIn(true);
 				});
 		});
 		// axios.defaults.headers.post["X-CSRF-Token"] = response.data._csrf;
 	};
 	return (
 		<div id="login-view" className="body">
-			{loading ? (
+			{isLoggedIn ? (
+				<Navigate to="/dashboard" />
+			) : loading ? (
 				<CircularProgress />
 			) : (
 				<Box

@@ -1,14 +1,24 @@
 import "./styles/app.css";
+import { useState } from "react";
 import Helmet from "react-helmet";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
+import UserContext from "./contexts/UserContext";
 import HomeView from "./routes/HomeView";
 import LoginView from "./routes/LoginView";
 import RegisterView from "./routes/RegisterView";
 import ContactView from "./routes/ContactView";
+import DashboardView from "./routes/DashboardView";
 
-function App() {
+import React from "react";
+
+export default function App() {
+	let [user, setUser] = useState(null);
+	let [isLoggedIn, setIsLoggedIn] = useState(false);
+	const login = () => {
+		setIsLoggedIn(true);
+	};
 	const theme = createTheme({
 		palette: {
 			primary: {
@@ -45,17 +55,21 @@ function App() {
 				<title>Counsel | Admin Dashboard</title>
 				<meta name="viewport" content="initial-scale=1, width=device-width" />
 			</Helmet>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-				<Routes>
-					<Route path="/" element={<HomeView />} />
-					<Route path="login" element={<LoginView />} />
-					<Route path="register" element={<RegisterView />} />
-					<Route path="contact" element={<ContactView />} />
-				</Routes>
-			</ThemeProvider>
+			<UserContext.Provider value={user}>
+				<ThemeProvider theme={theme}>
+					<CssBaseline />
+					<Routes>
+						<Route path="/" element={<HomeView />} />
+						<Route
+							path="login"
+							element={<LoginView login={login} setUser={setUser} />}
+						/>
+						<Route path="register" element={<RegisterView />} />
+						<Route path="contact" element={<ContactView />} />
+						<Route path="dashboard" element={<DashboardView />} />
+					</Routes>
+				</ThemeProvider>
+			</UserContext.Provider>
 		</div>
 	);
 }
-
-export default App;

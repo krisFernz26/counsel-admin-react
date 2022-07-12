@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useLayoutEffect, useEffect } from "react";
 import {
 	Box,
 	AppBar,
@@ -15,20 +15,23 @@ import { Navigate } from "react-router-dom";
 
 export default function DashboardView(props) {
 	let user = useContext(UserContext);
-	let [isLoggedIn, setIsLoggedIn] = useState(false);
+	let [isLoggedIn, setIsLoggedIn] = useState(true);
+	let [token, setToken] = useState("");
 	let [loading, setLoading] = useState(false);
 	let [error, setError] = useState("");
 
-	useEffect(() => {
-		if (user != null) {
-			setIsLoggedIn(true);
+	useLayoutEffect(() => {
+		if (user == null) {
+			setIsLoggedIn(false);
+		} else {
+			setToken(user.token);
 		}
 	}, []);
 
 	const logout = () => {
 		setLoading(true);
 		apiClient.interceptors.request.use(function (config) {
-			const token = user.token;
+			const token = token;
 			config.headers.Authorization = token ? `Bearer ${token}` : "";
 			return config;
 		});
@@ -51,7 +54,7 @@ export default function DashboardView(props) {
 	return (
 		<div>
 			{!isLoggedIn ? (
-				<Navigate to="/login" />
+				<Navigate to="/" />
 			) : loading ? (
 				<CircularProgress />
 			) : (

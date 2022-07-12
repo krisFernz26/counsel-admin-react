@@ -16,7 +16,6 @@ import { Navigate } from "react-router-dom";
 export default function DashboardView(props) {
 	let user = useContext(UserContext);
 	let [isLoggedIn, setIsLoggedIn] = useState(true);
-	let [token, setToken] = useState("");
 	let [loading, setLoading] = useState(false);
 	let [error, setError] = useState("");
 
@@ -29,7 +28,7 @@ export default function DashboardView(props) {
 	const logout = () => {
 		setLoading(true);
 		apiClient.interceptors.request.use(function (config) {
-			const token = token;
+			const token = user.token;
 			config.headers.Authorization = token ? `Bearer ${token}` : "";
 			return config;
 		});

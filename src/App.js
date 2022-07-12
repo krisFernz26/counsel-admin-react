@@ -68,7 +68,12 @@ export default function App() {
 								path="login"
 								element={<LoginView login={login} setUser={setUser} />}
 							/>
-							<Route path="register" element={<RegisterView />} />
+							<Route
+								path="register"
+								element={<RegisterView />}
+								login={login}
+								setUser={setUser}
+							/>
 							<Route path="contact" element={<ContactView />} />
 							<Route
 								path="dashboard"

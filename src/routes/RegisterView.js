@@ -2,15 +2,12 @@ import { Component } from "react";
 import "../styles/global.css";
 import "../styles/routes/register/view.css";
 
-class RegisterView extends Component {
-	state = {};
-	render() {
-		return (
-			<div id="register-view" className="body">
-				<h3>Register Page</h3>
-			</div>
-		);
-	}
-}
+import React from "react";
 
-export default RegisterView;
+export default function RegisterView(props) {
+	return (
+		<div id="register-view" className="body">
+			<h3>Register Page</h3>
+		</div>
+	);
+}

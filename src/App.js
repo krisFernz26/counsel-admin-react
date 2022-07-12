@@ -14,12 +14,12 @@ import DashboardView from "./routes/DashboardView";
 import React from "react";
 
 export default function App() {
-	let [user, setUser] = useState(null);
 	let [isLoggedIn, setIsLoggedIn] = useState(false);
 	const login = () => {
 		setIsLoggedIn(true);
 	};
 	const logout = () => {
+		localStorage.removeItem("user");
 		setIsLoggedIn(false);
 	};
 	const theme = createTheme({
@@ -59,29 +59,19 @@ export default function App() {
 					<title>Counsel | Admin Dashboard</title>
 					<meta name="viewport" content="initial-scale=1, width=device-width" />
 				</Helmet>
-				<UserContext.Provider value={user}>
-					<ThemeProvider theme={theme}>
-						<CssBaseline />
-						<Routes>
-							<Route path="/" element={<HomeView />} />
-							<Route
-								path="login"
-								element={<LoginView login={login} setUser={setUser} />}
-							/>
-							<Route
-								path="register"
-								element={<RegisterView />}
-								login={login}
-								setUser={setUser}
-							/>
-							<Route path="contact" element={<ContactView />} />
-							<Route
-								path="dashboard"
-								element={<DashboardView logout={logout} setUser={setUser} />}
-							/>
-						</Routes>
-					</ThemeProvider>
-				</UserContext.Provider>
+				<ThemeProvider theme={theme}>
+					<CssBaseline />
+					<Routes>
+						<Route path="/" element={<HomeView />} />
+						<Route path="login" element={<LoginView login={login} />} />
+						<Route path="register" element={<RegisterView />} login={login} />
+						<Route path="contact" element={<ContactView />} />
+						<Route
+							path="dashboard"
+							element={<DashboardView logout={logout} />}
+						/>
+					</Routes>
+				</ThemeProvider>
 			</div>
 		</HelmetProvider>
 	);

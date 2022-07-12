@@ -18,19 +18,21 @@ export default function LoginView(props) {
 		apiClient.get(`/sanctum/csrf-cookie`).then((res) => {
 			apiClient
 				.post(`/api/admin/login`, {
-					email,
-					password,
+					email: email,
+					password: password,
+				})
+				.then((response) => {
+					if (response.status == 201) {
+						console.log(response.data);
+						setLoading(false);
+						localStorage.setItem("user", JSON.stringify(response.data));
+						props.login();
+						setIsLoggedIn(true);
+					}
 				})
 				.catch((e) => {
 					setError(e.message);
 					setLoading(false);
-				})
-				.then((response) => {
-					console.log(response.data);
-					setLoading(false);
-					props.setUser(response.data);
-					props.login();
-					setIsLoggedIn(true);
 				});
 		});
 		// axios.defaults.headers.post["X-CSRF-Token"] = response.data._csrf;

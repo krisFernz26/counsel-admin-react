@@ -15,9 +15,9 @@ export default function LoginView(props) {
 	let [loading, setLoading] = useState(false);
 	let postData = () => {
 		setLoading(true);
-		apiClient.get(`http://localhost:8000/sanctum/csrf-cookie`).then((res) => {
+		apiClient.get(`/sanctum/csrf-cookie`).then((res) => {
 			apiClient
-				.post(`http://localhost:8000/api/login`, {
+				.post(`/api/admin/login`, {
 					email,
 					password,
 				})

@@ -19,6 +19,9 @@ export default function App() {
 	const login = () => {
 		setIsLoggedIn(true);
 	};
+	const logout = () => {
+		setIsLoggedIn(false);
+	};
 	const theme = createTheme({
 		palette: {
 			primary: {
@@ -66,7 +69,10 @@ export default function App() {
 						/>
 						<Route path="register" element={<RegisterView />} />
 						<Route path="contact" element={<ContactView />} />
-						<Route path="dashboard" element={<DashboardView />} />
+						<Route
+							path="dashboard"
+							element={<DashboardView logout={logout} setUser={setUser} />}
+						/>
 					</Routes>
 				</ThemeProvider>
 			</UserContext.Provider>

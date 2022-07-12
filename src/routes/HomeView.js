@@ -17,30 +17,14 @@ class HomeView extends Component {
 					<Stack
 						direction={{ xs: "column", sm: "row" }}
 						spacing={{ xs: 1, sm: 2 }}
-						divider={<Divider className="nav-divider" flexItem />}
 					>
-						<Button
-							component={Link}
-							to="login"
-							variant="outlined"
-							color="secondary"
-						>
+						<Button component={Link} to="login" variant="outlined">
 							Login
 						</Button>
-						<Button
-							component={Link}
-							to="register"
-							variant="outlined"
-							color="secondary"
-						>
+						<Button component={Link} to="register" variant="outlined">
 							Register
 						</Button>
-						<Button
-							component={Link}
-							to="contact"
-							variant="outlined"
-							color="secondary"
-						>
+						<Button component={Link} to="contact" variant="outlined">
 							Contact Us
 						</Button>
 					</Stack>

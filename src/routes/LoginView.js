@@ -1,5 +1,6 @@
 import { Component, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { isEmail, isLength } from "validator";
 import apiClient from "../services/api";
 import { Stack, Box, TextField, Button, CircularProgress } from "@mui/material";
 import "../styles/global.css";
@@ -10,31 +11,47 @@ import React from "react";
 export default function LoginView(props) {
 	let [email, setEmail] = useState("");
 	let [password, setPassword] = useState("");
+	let [emailError, setEmailError] = useState(false);
+	let [passError, setPassError] = useState(false);
 	let [error, setError] = useState("");
 	let [isLoggedIn, setIsLoggedIn] = useState(false);
 	let [loading, setLoading] = useState(false);
-	let postData = () => {
-		setLoading(true);
-		apiClient.get(`/sanctum/csrf-cookie`).then((res) => {
-			apiClient
-				.post(`/api/admin/login`, {
-					email: email,
-					password: password,
-				})
-				.then((response) => {
-					if (response.status == 201) {
-						console.log(response.data);
+	const validateFields = () => {
+		if (!isEmail(email)) {
+			setEmailError(true);
+		} else {
+			setEmailError(false);
+		}
+		if (!isLength(password, { min: 8 })) {
+			setPassError(true);
+		} else {
+			setPassError(false);
+		}
+	};
+	const login = () => {
+		validateFields();
+		if (!(emailError && passError)) {
+			setLoading(true);
+			apiClient.get(`/sanctum/csrf-cookie`).then((res) => {
+				apiClient
+					.post(`/api/admin/login`, {
+						email: email,
+						password: password,
+					})
+					.then((response) => {
+						if (response.status == 201) {
+							setLoading(false);
+							localStorage.setItem("user", JSON.stringify(response.data));
+							props.login();
+							setIsLoggedIn(true);
+						}
+					})
+					.catch((e) => {
+						setError(e.message);
 						setLoading(false);
-						localStorage.setItem("user", JSON.stringify(response.data));
-						props.login();
-						setIsLoggedIn(true);
-					}
-				})
-				.catch((e) => {
-					setError(e.message);
-					setLoading(false);
-				});
-		});
+					});
+			});
+		}
 		// axios.defaults.headers.post["X-CSRF-Token"] = response.data._csrf;
 	};
 	return (
@@ -49,7 +66,6 @@ export default function LoginView(props) {
 					sx={{
 						width: "20vw",
 					}}
-					noValidate
 					autoComplete="off"
 				>
 					<Stack direction="column" spacing={2}>
@@ -60,48 +76,39 @@ export default function LoginView(props) {
 							id="outlined"
 							label="Email Address"
 							placeholder="example@example.com"
-							size="small"
 							type="email"
 							fullWidth
-							color="secondary"
-							onChange={(e) => setEmail(e.target.value)}
+							onChange={(e) => {
+								setEmail(e.target.value);
+								validateFields();
+							}}
+							helperText={
+								emailError ? "Please input your correct admin email" : ""
+							}
+							error={emailError ? true : false}
 						/>
 
 						<TextField
 							id="outlined-password-input"
 							label="Password *"
 							placeholder="password123"
-							size="small"
 							type="password"
 							autoComplete="current-password"
-							helperText="8+ characters"
 							fullWidth
-							color="secondary"
-							onChange={(e) => setPassword(e.target.value)}
+							onChange={(e) => {
+								setPassword(e.target.value);
+								validateFields();
+							}}
+							helperText={passError ? "Please input your password" : ""}
+							error={passError ? true : false}
 						/>
-						<Button
-							variant="outlined"
-							color="secondary"
-							size="small"
-							onClick={postData}
-						>
+						<Button variant="outlined" onClick={login}>
 							Login
 						</Button>
-						<Button
-							component={Link}
-							to="register"
-							variant="outlined"
-							color="secondary"
-						>
+						<Button component={Link} to="register" variant="outlined">
 							Register
 						</Button>
-						<Button
-							size="small"
-							component={Link}
-							to="/"
-							variant="outlined"
-							color="secondary"
-						>
+						<Button component={Link} to="/" variant="outlined">
 							Go back
 						</Button>
 					</Stack>

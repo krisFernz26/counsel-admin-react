@@ -37,7 +37,6 @@ export default function DashboardView(props) {
 			.get("/api/logout", { headers: headers })
 			.then((res) => {
 				if (res.status == 200) {
-					console.log(res);
 					props.logout();
 					setIsLoggedIn(false);
 					setLoading(false);

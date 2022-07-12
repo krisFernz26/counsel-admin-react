@@ -28,19 +28,13 @@ export default function App() {
 				light: "#7789b3",
 				main: "#495c83",
 				dark: "#1c3356",
-				contrastText: "#fff",
+				contrastText: "#000",
 			},
 			secondary: {
 				light: "#ffffff",
 				main: "#fff",
 				dark: "#cccccc",
 				contrastText: "#000",
-			},
-			background: {
-				default: "#495c83",
-			},
-			text: {
-				primary: "#fff",
 			},
 		},
 	});

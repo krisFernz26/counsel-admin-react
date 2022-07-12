@@ -14,27 +14,29 @@ export default function LoginView() {
 	let [loading, setLoading] = useState(false);
 	let postData = () => {
 		setLoading(true);
-		// axios.get(`http://localhost:8000/sanctum/csrf-cookie`).then((res) => {
-		// axios.defaults.headers.post["X-CSRF-Token"] = res.data._csrf;
-		// console.log(res);
-		axios
-			.post(
-				`http://localhost:8000/api/login`,
-				{
-					email,
-					password,
-				}
-				// { withCredentials: true }
-			)
-			.catch((e) => {
-				setError(e.message);
-				setLoading(false);
-			})
-			.then((response) => {
-				console.log(response);
-				setLoading(false);
-			});
-		// });
+		axios.defaults.withCredentials = true;
+		axios.get(`http://localhost:8000/sanctum/csrf-cookie`).then((res) => {
+			axios
+				.post(
+					`http://localhost:8000/api/login`,
+					{
+						email,
+						password,
+					},
+					{
+						xsrfHeaderName: "X-XSRF-TOKEN",
+						withCredentials: true,
+					}
+				)
+				.catch((e) => {
+					setError(e.message);
+					setLoading(false);
+				})
+				.then((response) => {
+					console.log(response);
+					setLoading(false);
+				});
+		});
 		// axios.defaults.headers.post["X-CSRF-Token"] = response.data._csrf;
 	};
 	return (

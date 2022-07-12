@@ -23,8 +23,6 @@ export default function DashboardView(props) {
 	useLayoutEffect(() => {
 		if (user == null) {
 			setIsLoggedIn(false);
-		} else {
-			setToken(user.token);
 		}
 	}, []);
 
@@ -42,13 +40,13 @@ export default function DashboardView(props) {
 				setLoading(false);
 			})
 			.then((res) => {
-				if (res.status == 200) {
-					console.log(res);
-					props.setUser(null);
-					props.logout();
-					setIsLoggedIn(false);
-					setLoading(false);
-				}
+				// if (res.status == 200) {
+				console.log(res);
+				props.setUser(null);
+				props.logout();
+				setIsLoggedIn(false);
+				setLoading(false);
+				// }
 			});
 	};
 	return (

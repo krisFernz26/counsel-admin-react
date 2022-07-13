@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import {
 	Box,
 	IconButton,
-	SwipeableDrawer,
+	Drawer,
 	List,
 	ListItem,
 	ListItemButton,
@@ -41,7 +41,7 @@ export default function DashboardSidebar(props) {
 
 	return (
 		<div>
-			<SwipeableDrawer
+			<Drawer
 				anchor={"left"}
 				open={props.sidebar}
 				onClose={props.setSidebar}
@@ -119,7 +119,7 @@ export default function DashboardSidebar(props) {
 						</ListItem>
 					</List>
 				</Box>
-			</SwipeableDrawer>
+			</Drawer>
 		</div>
 	);
 }

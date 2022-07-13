@@ -21,6 +21,7 @@ export default function DashboardAppbar(props) {
 							color="secondary"
 							aria-label="menu"
 							sx={{ mr: 2 }}
+							onClick={props.toggleSidebar}
 						>
 							<Menu color="secondary" />
 						</IconButton>

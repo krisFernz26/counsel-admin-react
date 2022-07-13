@@ -5,13 +5,16 @@ import "../styles/global.css";
 import { Navigate } from "react-router-dom";
 import DashboardAppbar from "../components/dashboard/DashboardAppbar";
 import DashboardBody from "../components/dashboard/DashboardBody";
+import DashboardSidebar from "../components/dashboard/DashboardSidebar";
 
 export default function DashboardView(props) {
 	let user = JSON.parse(localStorage.getItem("user"));
 	let headers = {};
+	let [sidebar, setSidebar] = useState(false);
 	let [isLoggedIn, setIsLoggedIn] = useState(true);
 	let [loading, setLoading] = useState(false);
 	let [error, setError] = useState("");
+	let [anchor, setAnchor] = useState();
 
 	useLayoutEffect(() => {
 		if (user == null) {
@@ -40,6 +43,10 @@ export default function DashboardView(props) {
 				setLoading(false);
 			});
 	};
+
+	const toggleSidebar = () => {
+		setSidebar(!sidebar);
+	};
 	return (
 		<div>
 			{!isLoggedIn ? (
@@ -48,8 +55,13 @@ export default function DashboardView(props) {
 				<CircularProgress />
 			) : (
 				<>
-					<DashboardAppbar logout={logout} />
+					<DashboardAppbar logout={logout} toggleSidebar={toggleSidebar} />
 					<DashboardBody />
+					{sidebar ? (
+						<DashboardSidebar toggleSidebar={toggleSidebar} sidebar={sidebar} />
+					) : (
+						""
+					)}
 				</>
 			)}
 		</div>

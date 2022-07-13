@@ -1,10 +1,10 @@
 import React, { useState, useContext, useLayoutEffect, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 import apiClient from "../services/api";
-import UserContext from "../contexts/UserContext";
 import "../styles/global.css";
 import { Navigate } from "react-router-dom";
-import DashboardAppbar from "../components/DashboardAppbar";
+import DashboardAppbar from "../components/dashboard/DashboardAppbar";
+import DashboardBody from "../components/dashboard/DashboardBody";
 
 export default function DashboardView(props) {
 	let user = JSON.parse(localStorage.getItem("user"));
@@ -47,7 +47,10 @@ export default function DashboardView(props) {
 			) : loading ? (
 				<CircularProgress />
 			) : (
-				<DashboardAppbar logout={logout} />
+				<>
+					<DashboardAppbar logout={logout} />
+					<DashboardBody />
+				</>
 			)}
 		</div>
 	);

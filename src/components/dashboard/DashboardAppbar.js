@@ -7,6 +7,7 @@ import {
 	Typography,
 	Button,
 } from "@mui/material";
+import { Menu } from "@mui/icons-material";
 
 export default function DashboardAppbar(props) {
 	return (
@@ -21,12 +22,17 @@ export default function DashboardAppbar(props) {
 							aria-label="menu"
 							sx={{ mr: 2 }}
 						>
-							{/* <MenuIcon /> */}
+							<Menu color="secondary" />
 						</IconButton>
-						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						<Typography
+							variant="h6"
+							component="div"
+							sx={{ flexGrow: 1 }}
+							color="secondary"
+						>
 							Counselapp Admin Dashboard
 						</Typography>
-						<Button color="inherit" onClick={props.logout}>
+						<Button color="secondary" onClick={props.logout}>
 							Logout
 						</Button>
 					</Toolbar>

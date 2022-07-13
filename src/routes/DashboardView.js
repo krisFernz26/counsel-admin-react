@@ -1,17 +1,10 @@
 import React, { useState, useContext, useLayoutEffect, useEffect } from "react";
-import {
-	Box,
-	AppBar,
-	Toolbar,
-	IconButton,
-	Typography,
-	Button,
-	CircularProgress,
-} from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import apiClient from "../services/api";
 import UserContext from "../contexts/UserContext";
 import "../styles/global.css";
 import { Navigate } from "react-router-dom";
+import DashboardAppbar from "../components/DashboardAppbar";
 
 export default function DashboardView(props) {
 	let user = JSON.parse(localStorage.getItem("user"));
@@ -54,29 +47,7 @@ export default function DashboardView(props) {
 			) : loading ? (
 				<CircularProgress />
 			) : (
-				<header>
-					<Box sx={{ flexGrow: 1 }}>
-						<AppBar position="sticky">
-							<Toolbar>
-								<IconButton
-									size="large"
-									edge="start"
-									color="secondary"
-									aria-label="menu"
-									sx={{ mr: 2 }}
-								>
-									{/* <MenuIcon /> */}
-								</IconButton>
-								<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-									Counselapp Admin Dashboard
-								</Typography>
-								<Button color="inherit" onClick={logout}>
-									Logout
-								</Button>
-							</Toolbar>
-						</AppBar>
-					</Box>
-				</header>
+				<DashboardAppbar logout={logout} />
 			)}
 		</div>
 	);

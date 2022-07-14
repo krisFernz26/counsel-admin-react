@@ -24,6 +24,7 @@ import {
 	AccountCircleOutlined,
 	CheckBoxOutlined,
 	NoteAltOutlined,
+	HomeOutlined,
 } from "@mui/icons-material";
 
 export default function DashboardSidebar(props) {
@@ -47,8 +48,9 @@ export default function DashboardSidebar(props) {
 			<Drawer
 				anchor={"left"}
 				open={props.sidebar}
-				onClose={props.setSidebar}
-				onOpen={props.setSidebar}
+				ModalProps={{
+					keepMounted: true,
+				}}
 			>
 				<Box
 					sx={{ width: "auto" }}
@@ -60,6 +62,7 @@ export default function DashboardSidebar(props) {
 						<ListItem key="Profile">
 							<ListItemButton
 								onClick={() => {
+									props.toggleSidebar();
 									props.changePage("profile");
 								}}
 							>
@@ -67,6 +70,19 @@ export default function DashboardSidebar(props) {
 									<AccountBoxOutlined />
 								</ListItemIcon>
 								<ListItemText primary="Profile" />
+							</ListItemButton>
+						</ListItem>
+						<ListItem key="Home">
+							<ListItemButton
+								onClick={() => {
+									props.toggleSidebar();
+									props.changePage("landing");
+								}}
+							>
+								<ListItemIcon>
+									<HomeOutlined />
+								</ListItemIcon>
+								<ListItemText primary="Home" />
 							</ListItemButton>
 						</ListItem>
 					</List>
@@ -90,13 +106,23 @@ export default function DashboardSidebar(props) {
 									</ListItemButton>
 								</ListItem>
 								{
-									<Collapse in={open[index]} timeout="auto" unmountOnExit>
-										<List component="div" disablePadding>
-											<ListItem key={"Users"}>
+									<Collapse
+										in={open[index]}
+										timeout="auto"
+										unmountOnExit
+										key={text + "-collabsable"}
+									>
+										<List
+											component="div"
+											disablePadding
+											key={text + "-sublist"}
+										>
+											<ListItem key={index + "Users"}>
 												<ListItemButton
 													sx={{ pl: 4 }}
 													onClick={() => {
 														props.changePage(text.toLowerCase() + "-users");
+														props.toggleSidebar();
 													}}
 												>
 													<ListItemIcon>
@@ -107,13 +133,14 @@ export default function DashboardSidebar(props) {
 											</ListItem>
 											{index != 0 ? (
 												<>
-													<ListItem key={"Appointments"}>
+													<ListItem key={index + "Appointments"}>
 														<ListItemButton
 															sx={{ pl: 4 }}
 															onClick={() => {
 																props.changePage(
 																	text.toLowerCase() + "-appointments"
 																);
+																props.toggleSidebar();
 															}}
 														>
 															<ListItemIcon>
@@ -122,11 +149,12 @@ export default function DashboardSidebar(props) {
 															<ListItemText primary={"Appointments"} />
 														</ListItemButton>
 													</ListItem>
-													<ListItem key={"Notes"}>
+													<ListItem key={index + "Notes"}>
 														<ListItemButton
 															sx={{ pl: 4 }}
 															onClick={() => {
 																props.changePage(text.toLowerCase() + "-notes");
+																props.toggleSidebar();
 															}}
 														>
 															<ListItemIcon>
@@ -140,13 +168,14 @@ export default function DashboardSidebar(props) {
 												""
 											)}
 											{index == 1 ? (
-												<ListItem key={"Schedules"}>
+												<ListItem key={index + "Schedules"}>
 													<ListItemButton
 														sx={{ pl: 4 }}
 														onClick={() => {
 															props.changePage(
 																text.toLowerCase() + "-schedules"
 															);
+															props.toggleSidebar();
 														}}
 													>
 														<ListItemIcon>
@@ -159,13 +188,14 @@ export default function DashboardSidebar(props) {
 												""
 											)}
 											{index == 0 ? (
-												<ListItem key={"Approval"}>
+												<ListItem key={index + "Approval"}>
 													<ListItemButton
 														sx={{ pl: 4 }}
 														onClick={() => {
 															props.changePage(
 																text.toLowerCase() + "-approval"
 															);
+															props.toggleSidebar();
 														}}
 													>
 														<ListItemIcon>
@@ -189,6 +219,7 @@ export default function DashboardSidebar(props) {
 							<ListItemButton
 								onClick={() => {
 									props.changePage("terms");
+									props.toggleSidebar();
 								}}
 							>
 								<ListItemText primary="Terms of Service" />
@@ -198,6 +229,7 @@ export default function DashboardSidebar(props) {
 							key="Policies"
 							onClick={() => {
 								props.changePage("policies");
+								props.toggleSidebar();
 							}}
 						>
 							<ListItemButton>

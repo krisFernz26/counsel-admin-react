@@ -31,7 +31,7 @@ export default function DashboardAppbar(props) {
 							sx={{ flexGrow: 1 }}
 							color="secondary"
 						>
-							Counselapp Admin Dashboard
+							Counselor App Admin Dashboard
 						</Typography>
 						<Button color="secondary" onClick={props.logout}>
 							Logout

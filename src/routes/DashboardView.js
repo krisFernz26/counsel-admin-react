@@ -1,5 +1,5 @@
 import React, { useState, useContext, useLayoutEffect, useEffect } from "react";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Box } from "@mui/material";
 import apiClient from "../services/api";
 import "../styles/global.css";
 import { Navigate } from "react-router-dom";
@@ -63,7 +63,11 @@ export default function DashboardView(props) {
 			) : (
 				<>
 					<DashboardAppbar logout={logout} toggleSidebar={toggleSidebar} />
-					<DashboardBody currentPage={currentPage} />
+					<DashboardBody
+						currentPage={currentPage}
+						toggleSidebar={toggleSidebar}
+						sidebar={sidebar}
+					/>
 					{sidebar ? (
 						<DashboardSidebar
 							toggleSidebar={toggleSidebar}

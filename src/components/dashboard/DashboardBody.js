@@ -1,10 +1,13 @@
 import React from "react";
+import { Box } from "@mui/material";
+import Landing from "../landing/Landing";
+import Profile from "../profile/Profile";
 
 export default function DashboardBody(props) {
 	return (
-		<>
-			{props.currentPage.landing ? <div>DashboardBody</div> : ""}
-			{props.currentPage["profile"] ? <div>Profile</div> : ""}
+		<Box>
+			{props.currentPage.landing ? <Landing /> : ""}
+			{props.currentPage["profile"] ? <Profile /> : ""}
 
 			{props.currentPage["institutions-users"] ? (
 				<div>Institutions Users</div>
@@ -39,6 +42,6 @@ export default function DashboardBody(props) {
 			{props.currentPage["students-notes"] ? <div>Students Notes</div> : ""}
 			{props.currentPage["terms"] ? <div>Terms of service</div> : ""}
 			{props.currentPage["policies"] ? <div>Policies</div> : ""}
-		</>
+		</Box>
 	);
 }

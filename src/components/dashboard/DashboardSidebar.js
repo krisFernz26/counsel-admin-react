@@ -23,6 +23,7 @@ import {
 	VideoCallOutlined,
 	AccountCircleOutlined,
 	CheckBoxOutlined,
+	NoteAltOutlined,
 } from "@mui/icons-material";
 
 export default function DashboardSidebar(props) {
@@ -57,7 +58,11 @@ export default function DashboardSidebar(props) {
 				>
 					<List>
 						<ListItem key="Profile">
-							<ListItemButton>
+							<ListItemButton
+								onClick={() => {
+									props.changePage("profile");
+								}}
+							>
 								<ListItemIcon>
 									<AccountBoxOutlined />
 								</ListItemIcon>
@@ -88,7 +93,12 @@ export default function DashboardSidebar(props) {
 									<Collapse in={open[index]} timeout="auto" unmountOnExit>
 										<List component="div" disablePadding>
 											<ListItem key={"Users"}>
-												<ListItemButton sx={{ pl: 4 }}>
+												<ListItemButton
+													sx={{ pl: 4 }}
+													onClick={() => {
+														props.changePage(text.toLowerCase() + "-users");
+													}}
+												>
 													<ListItemIcon>
 														<AccountBoxOutlined />
 													</ListItemIcon>
@@ -98,28 +108,66 @@ export default function DashboardSidebar(props) {
 											{index != 0 ? (
 												<>
 													<ListItem key={"Appointments"}>
-														<ListItemButton sx={{ pl: 4 }}>
+														<ListItemButton
+															sx={{ pl: 4 }}
+															onClick={() => {
+																props.changePage(
+																	text.toLowerCase() + "-appointments"
+																);
+															}}
+														>
 															<ListItemIcon>
 																<VideoCallOutlined />
 															</ListItemIcon>
 															<ListItemText primary={"Appointments"} />
 														</ListItemButton>
 													</ListItem>
-													<ListItem key={"Schedules"}>
-														<ListItemButton sx={{ pl: 4 }}>
+													<ListItem key={"Notes"}>
+														<ListItemButton
+															sx={{ pl: 4 }}
+															onClick={() => {
+																props.changePage(text.toLowerCase() + "-notes");
+															}}
+														>
 															<ListItemIcon>
-																<ScheduleOutlined />
+																<NoteAltOutlined />
 															</ListItemIcon>
-															<ListItemText primary={"Schedules"} />
+															<ListItemText primary={"Notes"} />
 														</ListItemButton>
 													</ListItem>
 												</>
 											) : (
 												""
 											)}
+											{index == 1 ? (
+												<ListItem key={"Schedules"}>
+													<ListItemButton
+														sx={{ pl: 4 }}
+														onClick={() => {
+															props.changePage(
+																text.toLowerCase() + "-schedules"
+															);
+														}}
+													>
+														<ListItemIcon>
+															<ScheduleOutlined />
+														</ListItemIcon>
+														<ListItemText primary={"Schedules"} />
+													</ListItemButton>
+												</ListItem>
+											) : (
+												""
+											)}
 											{index == 0 ? (
 												<ListItem key={"Approval"}>
-													<ListItemButton sx={{ pl: 4 }}>
+													<ListItemButton
+														sx={{ pl: 4 }}
+														onClick={() => {
+															props.changePage(
+																text.toLowerCase() + "-approval"
+															);
+														}}
+													>
 														<ListItemIcon>
 															<CheckBoxOutlined />
 														</ListItemIcon>
@@ -138,11 +186,20 @@ export default function DashboardSidebar(props) {
 					<Divider />
 					<List>
 						<ListItem key="Terms of Service">
-							<ListItemButton>
+							<ListItemButton
+								onClick={() => {
+									props.changePage("terms");
+								}}
+							>
 								<ListItemText primary="Terms of Service" />
 							</ListItemButton>
 						</ListItem>
-						<ListItem key="Policies">
+						<ListItem
+							key="Policies"
+							onClick={() => {
+								props.changePage("policies");
+							}}
+						>
 							<ListItemButton>
 								<ListItemText primary="Policies" />
 							</ListItemButton>

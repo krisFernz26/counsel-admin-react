@@ -15,12 +15,7 @@ export default function DashboardView(props) {
 	let [loading, setLoading] = useState(false);
 	let [error, setError] = useState("");
 	let [currentPage, setCurrentPage] = useState({
-		landing: false,
-		"institutions-users": false,
-		"institutions-approval": false,
-		"counselors-users": false,
-		"counselors-appointments": false,
-		"counselors-schedules": false,
+		landing: true,
 	});
 
 	useLayoutEffect(() => {
@@ -54,6 +49,11 @@ export default function DashboardView(props) {
 	const toggleSidebar = () => {
 		setSidebar(!sidebar);
 	};
+
+	const changePage = (page) => {
+		setCurrentPage({ [page]: !currentPage[page] });
+	};
+
 	return (
 		<div>
 			{!isLoggedIn ? (
@@ -63,9 +63,13 @@ export default function DashboardView(props) {
 			) : (
 				<>
 					<DashboardAppbar logout={logout} toggleSidebar={toggleSidebar} />
-					<DashboardBody />
+					<DashboardBody currentPage={currentPage} />
 					{sidebar ? (
-						<DashboardSidebar toggleSidebar={toggleSidebar} sidebar={sidebar} />
+						<DashboardSidebar
+							toggleSidebar={toggleSidebar}
+							sidebar={sidebar}
+							changePage={changePage}
+						/>
 					) : (
 						""
 					)}

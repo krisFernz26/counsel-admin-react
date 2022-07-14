@@ -22,9 +22,11 @@ import {
 	ScheduleOutlined,
 	VideoCallOutlined,
 	AccountCircleOutlined,
+	CheckBoxOutlined,
 } from "@mui/icons-material";
 
 export default function DashboardSidebar(props) {
+	const [openInstitutions, setOpenInstitutions] = useState(false);
 	const [openCounselors, setOpenCounselors] = useState(false);
 	const [openStudents, setOpenStudents] = useState(false);
 	const icons = [
@@ -32,9 +34,9 @@ export default function DashboardSidebar(props) {
 		<BookmarkOutlined />,
 		<ChildCareOutlined />,
 	];
-	const subicons = [<VideoCallOutlined />, <ScheduleOutlined />];
-	const open = [openCounselors, openStudents];
+	const open = [openInstitutions, openCounselors, openStudents];
 	const handleOnClick = (index) => {
+		if (index == 0) setOpenInstitutions(!openInstitutions);
 		if (index == 1) setOpenCounselors(!openCounselors);
 		if (index == 2) setOpenStudents(!openStudents);
 	};
@@ -75,33 +77,61 @@ export default function DashboardSidebar(props) {
 									>
 										<ListItemIcon>{icons[index]}</ListItemIcon>
 										<ListItemText primary={text} sx={{ pr: 4 }} />
-										{index == 0 ? (
-											""
-										) : open[index - 1] ? (
+										{open[index] ? (
 											<ExpandLessOutlined />
 										) : (
 											<ExpandMoreOutlined />
 										)}
 									</ListItemButton>
 								</ListItem>
-								{index == 0 ? (
-									""
-								) : (
-									<Collapse in={open[index - 1]} timeout="auto" unmountOnExit>
+								{
+									<Collapse in={open[index]} timeout="auto" unmountOnExit>
 										<List component="div" disablePadding>
-											{["Appointments", "Schedules"].map(
-												(subtext, subindex) => (
-													<ListItem key={subtext}>
+											<ListItem key={"Users"}>
+												<ListItemButton sx={{ pl: 4 }}>
+													<ListItemIcon>
+														<AccountBoxOutlined />
+													</ListItemIcon>
+													<ListItemText primary={"Users"} />
+												</ListItemButton>
+											</ListItem>
+											{index != 0 ? (
+												<>
+													<ListItem key={"Appointments"}>
 														<ListItemButton sx={{ pl: 4 }}>
-															<ListItemIcon>{subicons[subindex]}</ListItemIcon>
-															<ListItemText primary={subtext} />
+															<ListItemIcon>
+																<VideoCallOutlined />
+															</ListItemIcon>
+															<ListItemText primary={"Appointments"} />
 														</ListItemButton>
 													</ListItem>
-												)
+													<ListItem key={"Schedules"}>
+														<ListItemButton sx={{ pl: 4 }}>
+															<ListItemIcon>
+																<ScheduleOutlined />
+															</ListItemIcon>
+															<ListItemText primary={"Schedules"} />
+														</ListItemButton>
+													</ListItem>
+												</>
+											) : (
+												""
+											)}
+											{index == 0 ? (
+												<ListItem key={"Approval"}>
+													<ListItemButton sx={{ pl: 4 }}>
+														<ListItemIcon>
+															<CheckBoxOutlined />
+														</ListItemIcon>
+														<ListItemText primary={"Approval"} />
+													</ListItemButton>
+												</ListItem>
+											) : (
+												""
 											)}
 										</List>
 									</Collapse>
-								)}
+								}
 							</Box>
 						))}
 					</List>

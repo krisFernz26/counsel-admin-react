@@ -14,7 +14,14 @@ export default function DashboardView(props) {
 	let [isLoggedIn, setIsLoggedIn] = useState(true);
 	let [loading, setLoading] = useState(false);
 	let [error, setError] = useState("");
-	let [anchor, setAnchor] = useState();
+	let [currentPage, setCurrentPage] = useState({
+		landing: false,
+		"institutions-users": false,
+		"institutions-approval": false,
+		"counselors-users": false,
+		"counselors-appointments": false,
+		"counselors-schedules": false,
+	});
 
 	useLayoutEffect(() => {
 		if (user == null) {

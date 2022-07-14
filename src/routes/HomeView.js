@@ -21,9 +21,9 @@ class HomeView extends Component {
 						<Button component={Link} to="login" variant="outlined">
 							Login
 						</Button>
-						<Button component={Link} to="register" variant="outlined">
+						{/* <Button component={Link} to="register" variant="outlined">
 							Register
-						</Button>
+						</Button> */}
 						<Button component={Link} to="contact" variant="outlined">
 							Contact Us
 						</Button>

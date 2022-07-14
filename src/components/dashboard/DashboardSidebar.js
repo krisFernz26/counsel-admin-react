@@ -25,6 +25,7 @@ import {
 	CheckBoxOutlined,
 	NoteAltOutlined,
 	HomeOutlined,
+	AddBoxOutlined,
 } from "@mui/icons-material";
 
 export default function DashboardSidebar(props) {
@@ -59,6 +60,18 @@ export default function DashboardSidebar(props) {
 					onKeyDown={props.setSidebar}
 				>
 					<List>
+						<ListItem
+							key="Close"
+							sx={{ display: "flex", justifyContent: "flex-end" }}
+						>
+							<ListItemButton
+								onClick={() => {
+									props.toggleSidebar();
+								}}
+							>
+								<ListItemText primary="Close" />
+							</ListItemButton>
+						</ListItem>
 						<ListItem key="Profile">
 							<ListItemButton
 								onClick={() => {
@@ -83,6 +96,22 @@ export default function DashboardSidebar(props) {
 									<HomeOutlined />
 								</ListItemIcon>
 								<ListItemText primary="Home" />
+							</ListItemButton>
+						</ListItem>
+					</List>
+					<Divider />
+					<List>
+						<ListItem key="Admin">
+							<ListItemButton
+								onClick={() => {
+									props.toggleSidebar();
+									props.changePage("admin-users");
+								}}
+							>
+								<ListItemIcon>
+									<AccountBoxOutlined />
+								</ListItemIcon>
+								<ListItemText primary="Admin Users" />
 							</ListItemButton>
 						</ListItem>
 					</List>
@@ -188,22 +217,40 @@ export default function DashboardSidebar(props) {
 												""
 											)}
 											{index == 0 ? (
-												<ListItem key={index + "Approval"}>
-													<ListItemButton
-														sx={{ pl: 4 }}
-														onClick={() => {
-															props.changePage(
-																text.toLowerCase() + "-approval"
-															);
-															props.toggleSidebar();
-														}}
-													>
-														<ListItemIcon>
-															<CheckBoxOutlined />
-														</ListItemIcon>
-														<ListItemText primary={"Approval"} />
-													</ListItemButton>
-												</ListItem>
+												<>
+													<ListItem key={index + "Create"}>
+														<ListItemButton
+															sx={{ pl: 4 }}
+															onClick={() => {
+																props.changePage(
+																	text.toLowerCase() + "-create"
+																);
+																props.toggleSidebar();
+															}}
+														>
+															<ListItemIcon>
+																<AddBoxOutlined />
+															</ListItemIcon>
+															<ListItemText primary={"Register"} />
+														</ListItemButton>
+													</ListItem>
+													<ListItem key={index + "Approval"}>
+														<ListItemButton
+															sx={{ pl: 4 }}
+															onClick={() => {
+																props.changePage(
+																	text.toLowerCase() + "-approval"
+																);
+																props.toggleSidebar();
+															}}
+														>
+															<ListItemIcon>
+																<CheckBoxOutlined />
+															</ListItemIcon>
+															<ListItemText primary={"Approval"} />
+														</ListItemButton>
+													</ListItem>
+												</>
 											) : (
 												""
 											)}

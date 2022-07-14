@@ -9,8 +9,15 @@ export default function DashboardBody(props) {
 			{props.currentPage.landing ? <Landing /> : ""}
 			{props.currentPage["profile"] ? <Profile /> : ""}
 
+			{props.currentPage["admin-users"] ? <div>Admin Users</div> : ""}
+
 			{props.currentPage["institutions-users"] ? (
 				<div>Institutions Users</div>
+			) : (
+				""
+			)}
+			{props.currentPage["institutions-create"] ? (
+				<div>Institutions Create</div>
 			) : (
 				""
 			)}

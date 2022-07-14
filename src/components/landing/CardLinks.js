@@ -13,7 +13,7 @@ export default function CardLinks(props) {
 		console.log(props.link);
 	};
 	return (
-		<Card sx={{ minWidth: 350 }}>
+		<Card sx={{ width: 400, height: 350 }}>
 			<CardMedia
 				component="img"
 				height="200"

@@ -58,7 +58,7 @@ export default function App() {
 					<Routes>
 						<Route path="/" element={<HomeView />} />
 						<Route path="login" element={<LoginView login={login} />} />
-						<Route path="register" element={<RegisterView />} login={login} />
+						{/* <Route path="register" element={<RegisterView />} login={login} /> */}
 						<Route path="contact" element={<ContactView />} />
 						<Route
 							path="dashboard"

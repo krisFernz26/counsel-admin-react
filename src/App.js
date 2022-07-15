@@ -4,10 +4,8 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
-import UserContext from "./contexts/UserContext";
 import HomeView from "./routes/HomeView";
 import LoginView from "./routes/LoginView";
-import RegisterView from "./routes/RegisterView";
 import ContactView from "./routes/ContactView";
 import DashboardView from "./routes/DashboardView";
 

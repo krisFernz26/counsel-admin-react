@@ -6,7 +6,6 @@ import "../styles/global.css";
 import "../styles/routes/home/view.css";
 
 class HomeView extends Component {
-	state = {};
 	render() {
 		return (
 			<div id="home-view" className="body">

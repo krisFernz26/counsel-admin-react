@@ -1,4 +1,4 @@
-import { Component, useState } from "react";
+import { Component, useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { isEmail, isLength } from "validator";
 import apiClient from "../services/api";
@@ -7,6 +7,7 @@ import "../styles/global.css";
 import "../styles/routes/login/view.css";
 
 import React from "react";
+import UserContext from "../contexts/UserContext";
 
 export default function LoginView(props) {
 	let [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ export default function LoginView(props) {
 	let [error, setError] = useState("");
 	let [isLoggedIn, setIsLoggedIn] = useState(false);
 	let [loading, setLoading] = useState(false);
+	let user = useContext(UserContext);
 	const validateFields = () => {
 		if (!isEmail(email)) {
 			setEmailError(true);

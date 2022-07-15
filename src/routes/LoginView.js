@@ -105,7 +105,6 @@ export default function LoginView(props) {
 						<Button variant="outlined" onClick={login}>
 							Login
 						</Button>
-
 						<Button component={Link} to="/" variant="outlined">
 							Go back
 						</Button>

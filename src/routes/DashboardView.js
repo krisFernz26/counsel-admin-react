@@ -70,6 +70,7 @@ export default function DashboardView(props) {
 					/>
 					{sidebar ? (
 						<DashboardSidebar
+							currentPage={currentPage}
 							toggleSidebar={toggleSidebar}
 							sidebar={sidebar}
 							changePage={changePage}

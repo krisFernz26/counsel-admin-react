@@ -78,6 +78,7 @@ export default function DashboardSidebar(props) {
 									props.toggleSidebar();
 									props.changePage("profile");
 								}}
+								disabled={props.currentPage["profile"] ? true : false}
 							>
 								<ListItemIcon>
 									<AccountBoxOutlined />
@@ -91,6 +92,7 @@ export default function DashboardSidebar(props) {
 									props.toggleSidebar();
 									props.changePage("landing");
 								}}
+								disabled={props.currentPage["landing"] ? true : false}
 							>
 								<ListItemIcon>
 									<HomeOutlined />
@@ -107,6 +109,7 @@ export default function DashboardSidebar(props) {
 									props.toggleSidebar();
 									props.changePage("admin-users");
 								}}
+								disabled={props.currentPage["admin-users"] ? true : false}
 							>
 								<ListItemIcon>
 									<AccountBoxOutlined />
@@ -153,6 +156,11 @@ export default function DashboardSidebar(props) {
 														props.changePage(text.toLowerCase() + "-users");
 														props.toggleSidebar();
 													}}
+													disabled={
+														props.currentPage[text.toLowerCase() + "-users"]
+															? true
+															: false
+													}
 												>
 													<ListItemIcon>
 														<AccountBoxOutlined />
@@ -171,6 +179,13 @@ export default function DashboardSidebar(props) {
 																);
 																props.toggleSidebar();
 															}}
+															disabled={
+																props.currentPage[
+																	text.toLowerCase() + "-appointments"
+																]
+																	? true
+																	: false
+															}
 														>
 															<ListItemIcon>
 																<VideoCallOutlined />
@@ -185,6 +200,11 @@ export default function DashboardSidebar(props) {
 																props.changePage(text.toLowerCase() + "-notes");
 																props.toggleSidebar();
 															}}
+															disabled={
+																props.currentPage[text.toLowerCase() + "-notes"]
+																	? true
+																	: false
+															}
 														>
 															<ListItemIcon>
 																<NoteAltOutlined />
@@ -206,6 +226,13 @@ export default function DashboardSidebar(props) {
 															);
 															props.toggleSidebar();
 														}}
+														disabled={
+															props.currentPage[
+																text.toLowerCase() + "-schedules"
+															]
+																? true
+																: false
+														}
 													>
 														<ListItemIcon>
 															<ScheduleOutlined />
@@ -227,6 +254,13 @@ export default function DashboardSidebar(props) {
 																);
 																props.toggleSidebar();
 															}}
+															disabled={
+																props.currentPage[
+																	text.toLowerCase() + "-create"
+																]
+																	? true
+																	: false
+															}
 														>
 															<ListItemIcon>
 																<AddBoxOutlined />
@@ -243,6 +277,13 @@ export default function DashboardSidebar(props) {
 																);
 																props.toggleSidebar();
 															}}
+															disabled={
+																props.currentPage[
+																	text.toLowerCase() + "-approval"
+																]
+																	? true
+																	: false
+															}
 														>
 															<ListItemIcon>
 																<CheckBoxOutlined />
@@ -268,6 +309,7 @@ export default function DashboardSidebar(props) {
 									props.changePage("terms");
 									props.toggleSidebar();
 								}}
+								disabled={props.currentPage["terms"] ? true : false}
 							>
 								<ListItemText primary="Terms of Service" />
 							</ListItemButton>
@@ -278,6 +320,7 @@ export default function DashboardSidebar(props) {
 								props.changePage("policies");
 								props.toggleSidebar();
 							}}
+							disabled={props.currentPage["policies"] ? true : false}
 						>
 							<ListItemButton>
 								<ListItemText primary="Policies" />

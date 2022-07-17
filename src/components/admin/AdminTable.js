@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Button, ButtonGroup } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Moment from "moment";
 
@@ -52,6 +52,22 @@ export default function AdminTable({ users }) {
 			sortable: true,
 			flex: 1,
 		},
+		{
+			field: "actions",
+			headerName: "Actions",
+			flex: 1.25,
+			alignItems: "right",
+			renderCell: (params) => {
+				return (
+					<Box>
+						<ButtonGroup variant="text">
+							<Button color="success">Update</Button>
+							<Button color="error">Delete</Button>
+						</ButtonGroup>
+					</Box>
+				);
+			},
+		},
 	];
 	const rows = users.map((user) => {
 		return {
@@ -78,7 +94,7 @@ export default function AdminTable({ users }) {
 				rows={rows}
 				columns={columns}
 				pageSize={15}
-				rowsPerPageOptions={[5]}
+				rowsPerPageOptions={[15]}
 				disableSelectionOnClick
 				centered
 			/>

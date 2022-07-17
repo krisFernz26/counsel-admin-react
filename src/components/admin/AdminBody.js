@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Tabs, Tab, CircularProgress } from "@mui/material";
+import { Box, Tabs, Tab, CircularProgress, TextField } from "@mui/material";
 import AdminTable from "./AdminTable";
 import AdminCreateForm from "./AdminCreateForm";
 import AdminUpdateForm from "./AdminUpdateForm";
@@ -63,7 +63,14 @@ export default function AdminBody() {
 				</Tabs>
 			</Box>
 			{loading ? (
-				<CircularProgress />
+				<Box
+					display="flex"
+					alignItems="center"
+					justifyContent="center"
+					sx={{ height: "calc(100vh - 64px)" }}
+				>
+					<CircularProgress />
+				</Box>
 			) : (
 				<TabPanel value={tabValue} index={0}>
 					<h3>All Admin Users</h3>

@@ -18,7 +18,7 @@ export default function Profile() {
 				{user.first_name} {user.last_name}
 			</h4>
 			<p>
-				<b>Registered on:</b> {Moment(user.created_at).format("MMM d, yyy")}
+				<b>Registered on:</b> {Moment(user.created_at).format("MMMM Do, YYYY")}
 			</p>
 			<p>
 				<b>Email Address:</b> {user.email}

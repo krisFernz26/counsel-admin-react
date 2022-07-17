@@ -66,7 +66,7 @@ export default function AdminBody() {
 				<CircularProgress />
 			) : (
 				<TabPanel value={tabValue} index={0}>
-					<h3>All Admins</h3>
+					<h3>All Admin Users</h3>
 					<AdminTable users={users} />
 				</TabPanel>
 			)}

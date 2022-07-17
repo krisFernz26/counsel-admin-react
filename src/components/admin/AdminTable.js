@@ -44,6 +44,7 @@ export default function AdminTable({ users }) {
 			headerName: "Registered On",
 			sortable: true,
 			flex: 1,
+			type: "date",
 		},
 		{
 			field: "address",
@@ -77,7 +78,7 @@ export default function AdminTable({ users }) {
 				rows={rows}
 				columns={columns}
 				pageSize={15}
-				rowsPerPageOptions={[25]}
+				rowsPerPageOptions={[5]}
 				disableSelectionOnClick
 				centered
 			/>

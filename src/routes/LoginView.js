@@ -10,14 +10,13 @@ import React from "react";
 import UserContext from "../contexts/UserContext";
 
 export default function LoginView(props) {
-	let [email, setEmail] = useState("");
-	let [password, setPassword] = useState("");
-	let [emailError, setEmailError] = useState(false);
-	let [passError, setPassError] = useState(false);
-	let [error, setError] = useState("");
-	let [isLoggedIn, setIsLoggedIn] = useState(false);
-	let [loading, setLoading] = useState(false);
-	let user = useContext(UserContext);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [emailError, setEmailError] = useState(false);
+	const [passError, setPassError] = useState(false);
+	const [error, setError] = useState("");
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const validateFields = () => {
 		if (!isEmail(email)) {
 			setEmailError(true);

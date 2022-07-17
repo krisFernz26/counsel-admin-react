@@ -1,9 +1,26 @@
-import React from "react";
-import { Box, Button, ButtonGroup } from "@mui/material";
+import React, { useState } from "react";
+import {
+	Box,
+	Button,
+	ButtonGroup,
+	Dialog,
+	DialogActions,
+	DialogTitle,
+	DialogContent,
+	DialogContentText,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Moment from "moment";
+import apiClient from "../../services/api";
 
 export default function AdminTable({ users }) {
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+	const [deleteSuccessDialogOpen, setDeleteSuccessDialogOpen] = useState(false);
+	const token = JSON.parse(localStorage.getItem("user")).token;
+	const headers = {
+		accepts: "application/json",
+		Authorization: `Bearer ${token}`,
+	};
 	const columns = [
 		{ field: "id", headerName: "ID", flex: 0.5 },
 		{ field: "institutionID", headerName: "Institution ID", flex: 0.5 },
@@ -62,7 +79,9 @@ export default function AdminTable({ users }) {
 					<Box>
 						<ButtonGroup variant="text">
 							<Button color="success">Update</Button>
-							<Button color="error">Delete</Button>
+							<Button color="error" onClick={handleOnDeleteButtonClick}>
+								Delete
+							</Button>
 						</ButtonGroup>
 					</Box>
 				);
@@ -82,6 +101,27 @@ export default function AdminTable({ users }) {
 			address: user.address,
 		};
 	});
+
+	const handleOnDeleteButtonClick = () => {
+		setDeleteDialogOpen(true);
+	};
+	const handleOnDeleteDialogClose = () => {
+		setDeleteDialogOpen(false);
+	};
+	const handleOnDeleteSuccessDialogClose = () => {
+		setDeleteSuccessDialogOpen(false);
+	};
+	const deleteUser = (id) => {
+		apiClient
+			.delete(`/api/users/${id}`, {
+				headers: headers,
+			})
+			.then((res) => {
+				console.log(res);
+				setDeleteDialogOpen(false);
+				setDeleteSuccessDialogOpen(true);
+			});
+	};
 	return (
 		<Box
 			sx={{ height: 400, width: "100%" }}
@@ -90,6 +130,49 @@ export default function AdminTable({ users }) {
 			alignItems="center"
 			minHeight="100vh"
 		>
+			<Dialog
+				open={deleteSuccessDialogOpen}
+				onClose={handleOnDeleteSuccessDialogClose}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle id="alert-dialog-title">
+					{"Admin account deleted"}
+				</DialogTitle>
+				<DialogActions>
+					<Button onClick={handleOnDeleteSuccessDialogClose} color="success">
+						OK
+					</Button>
+				</DialogActions>
+			</Dialog>
+			<Dialog
+				open={deleteDialogOpen}
+				onClose={handleOnDeleteDialogClose}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle id="alert-dialog-title">
+					{"Delete admin account?"}
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description">
+						Are you sure you want to delete this admin account?
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleOnDeleteDialogClose} autoFocus>
+						Cancel
+					</Button>
+					<Button
+						onClick={() => {
+							deleteUser(48);
+						}}
+						color="error"
+					>
+						Yes
+					</Button>
+				</DialogActions>
+			</Dialog>
 			<DataGrid
 				rows={rows}
 				columns={columns}

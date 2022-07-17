@@ -2,6 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import Landing from "../landing/Landing";
 import Profile from "../profile/Profile";
+import AdminBody from "../admin/AdminBody";
 
 export default function DashboardBody(props) {
 	return (
@@ -9,7 +10,7 @@ export default function DashboardBody(props) {
 			{props.currentPage.landing ? <Landing /> : ""}
 			{props.currentPage["profile"] ? <Profile /> : ""}
 
-			{props.currentPage["admin-users"] ? <div>Admin Users</div> : ""}
+			{props.currentPage["admin-users"] ? <AdminBody /> : ""}
 
 			{props.currentPage["institutions-users"] ? (
 				<div>Institutions Users</div>

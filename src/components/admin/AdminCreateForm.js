@@ -6,9 +6,12 @@ import {
 	Button,
 	Stack,
 	Divider,
+	CircularProgress,
+	MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { isEmail, isLength, isEmpty, isAlphanumeric } from "validator";
+import apiClient from "../../services/api";
 
 export default function AdminCreateForm() {
 	const [institutionId, setInstitutionId] = useState("");
@@ -21,6 +24,7 @@ export default function AdminCreateForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [institutions, setInstitutions] = useState([]);
 	const [errors, setErrors] = useState({
 		institution: false,
 		email: false,
@@ -30,6 +34,23 @@ export default function AdminCreateForm() {
 		lastName: false,
 		birthdate: false,
 	});
+	const token = JSON.parse(localStorage.getItem("user")).token;
+	const headers = {
+		accept: "application/json",
+		Authorization: "Bearer " + token,
+	};
+	useEffect(() => {
+		setLoading(true);
+		apiClient
+			.get("/api/institutions/names", {
+				headers: headers,
+			})
+			.then((res) => {
+				setInstitutions(res.data);
+				setLoading(false);
+			});
+	}, []);
+
 	const validateFields = () => {
 		setErrors({
 			firstName: isEmpty(firstName),
@@ -55,98 +76,126 @@ export default function AdminCreateForm() {
 			justifyContent="center"
 		>
 			{/* institution, role, first_name, last_name, address, birthdate, username, email, password */}
-			<Stack spacing={2}>
-				<TextField
-					required
-					label="First Name"
-					placeholder="John"
-					type="text"
-					// fullWidth
-					onChange={(e) => {
-						setFirstName(e.target.value);
-						validateFields();
-					}}
-					helperText={errors["firstName"] ? "Please input your first name" : ""}
-					error={errors["firstName"]}
-				/>
-				<TextField
-					required
-					label="Last Name"
-					placeholder="Doe"
-					type="text"
-					// fullWidth
-					onChange={(e) => {
-						setLastName(e.target.value);
-						validateFields();
-					}}
-					helperText={errors["lastName"] ? "Please input your last name" : ""}
-					error={errors["lastName"]}
-				/>
-				<TextField
-					required
-					label="Email"
-					placeholder="john.doe@counsel.com"
-					type="email"
-					// fullWidth
-					onChange={(e) => {
-						setEmail(e.target.value);
-						validateFields();
-					}}
-					helperText={errors["email"] ? "Please input an email" : ""}
-					error={errors["email"]}
-				/>
-				<TextField
-					label="Password"
-					placeholder="password123"
-					type="password"
-					required
-					onChange={(e) => {
-						setPassword(e.target.value);
-						validateFields();
-					}}
-					helperText={errors["password"] ? "Please input your password" : ""}
-					error={errors["password"]}
-				/>
-				<TextField
-					required
-					label="Username"
-					placeholder="johnDoe123"
-					type="text"
-					// fullWidth
-					onChange={(e) => {
-						setUsername(e.target.value);
-						validateFields();
-					}}
-					helperText={errors["username"] ? "Please input a username" : ""}
-					error={errors["username"]}
-				/>
-				<TextField
-					label="Address"
-					placeholder=""
-					type="text"
-					// fullWidth
-					onChange={(e) => {
-						setAddress(e.target.value);
-						validateFields();
-					}}
-				/>
-				<TextField
-					label="Birthdate"
-					placeholder="Jan 1, 1998"
-					type="date"
-					// fullWidth
-					onChange={(e) => {
-						setBirthdate(e.target.value);
-						validateFields();
-					}}
-					helperText={errors["birthdate"] ? "Please input your birthdate" : ""}
-					error={errors["birthdate"]}
-					InputLabelProps={{
-						shrink: true,
-					}}
-				/>
-				<Button variant="outlined">Create new admin account</Button>
-			</Stack>
+			{loading ? (
+				<CircularProgress />
+			) : (
+				<Stack spacing={2}>
+					<TextField
+						required
+						select
+						label="Institution Name"
+						// fullWidth
+						onChange={(e) => {
+							setInstitutionId(e.target.value);
+							validateFields();
+						}}
+						helperText={
+							errors["institution"] ? "Please choose your institution" : ""
+						}
+						error={errors["institution"]}
+						defaultValue={1}
+					>
+						{institutions.map((institution) => (
+							<MenuItem key={institution["id"]} value={institution["id"]}>
+								{institution["name"]}
+							</MenuItem>
+						))}
+					</TextField>
+					<TextField
+						required
+						label="First Name"
+						placeholder="John"
+						type="text"
+						// fullWidth
+						onChange={(e) => {
+							setFirstName(e.target.value);
+							validateFields();
+						}}
+						helperText={
+							errors["firstName"] ? "Please input your first name" : ""
+						}
+						error={errors["firstName"]}
+					/>
+					<TextField
+						required
+						label="Last Name"
+						placeholder="Doe"
+						type="text"
+						// fullWidth
+						onChange={(e) => {
+							setLastName(e.target.value);
+							validateFields();
+						}}
+						helperText={errors["lastName"] ? "Please input your last name" : ""}
+						error={errors["lastName"]}
+					/>
+					<TextField
+						required
+						label="Email"
+						placeholder="john.doe@counsel.com"
+						type="email"
+						// fullWidth
+						onChange={(e) => {
+							setEmail(e.target.value);
+							validateFields();
+						}}
+						helperText={errors["email"] ? "Please input an email" : ""}
+						error={errors["email"]}
+					/>
+					<TextField
+						label="Password"
+						placeholder="password123"
+						type="password"
+						required
+						onChange={(e) => {
+							setPassword(e.target.value);
+							validateFields();
+						}}
+						helperText={errors["password"] ? "Please input your password" : ""}
+						error={errors["password"]}
+					/>
+					<TextField
+						required
+						label="Username"
+						placeholder="johnDoe123"
+						type="text"
+						// fullWidth
+						onChange={(e) => {
+							setUsername(e.target.value);
+							validateFields();
+						}}
+						helperText={errors["username"] ? "Please input a username" : ""}
+						error={errors["username"]}
+					/>
+					<TextField
+						label="Address"
+						placeholder=""
+						type="text"
+						// fullWidth
+						onChange={(e) => {
+							setAddress(e.target.value);
+							validateFields();
+						}}
+					/>
+					<TextField
+						label="Birthdate"
+						type="date"
+						// fullWidth
+						onChange={(e) => {
+							setBirthdate(e.target.value);
+							validateFields();
+						}}
+						helperText={
+							errors["birthdate"] ? "Please input your birthdate" : ""
+						}
+						error={errors["birthdate"]}
+						InputLabelProps={{
+							shrink: true,
+						}}
+					/>
+					<Button variant="outlined">Create new admin account</Button>
+				</Stack>
+			)}
 		</Box>
 	);
 }

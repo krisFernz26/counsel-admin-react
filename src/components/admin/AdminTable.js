@@ -124,11 +124,13 @@ export default function AdminTable({ users }) {
 	};
 	return (
 		<Box
-			sx={{ height: 400, width: "100%" }}
+			sx={{ height: 400 }}
 			display="flex"
 			justifyContent="center"
 			alignItems="center"
 			minHeight="100vh"
+			ml="50px"
+			mr="50px"
 		>
 			<Dialog
 				open={deleteSuccessDialogOpen}

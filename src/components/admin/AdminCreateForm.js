@@ -82,7 +82,6 @@ export default function AdminCreateForm() {
 					helperText={errors["lastName"] ? "Please input your last name" : ""}
 					error={errors["lastName"]}
 				/>
-				<Divider />
 				<TextField
 					required
 					label="Email"
@@ -121,7 +120,6 @@ export default function AdminCreateForm() {
 					helperText={errors["username"] ? "Please input a username" : ""}
 					error={errors["username"]}
 				/>
-				<Divider />
 				<TextField
 					label="Address"
 					placeholder=""
@@ -147,7 +145,7 @@ export default function AdminCreateForm() {
 						shrink: true,
 					}}
 				/>
-				<Button variant="outlined">Register</Button>
+				<Button variant="outlined">Create new admin account</Button>
 			</Stack>
 		</Box>
 	);

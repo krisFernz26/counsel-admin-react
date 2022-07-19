@@ -78,7 +78,7 @@ export default function AdminBody() {
 				</TabPanel>
 			)}
 			<TabPanel value={tabValue} index={1}>
-				<h3>Register New Admin</h3>
+				<h3>Register a new admin account</h3>
 				<AdminCreateForm />
 			</TabPanel>
 		</>

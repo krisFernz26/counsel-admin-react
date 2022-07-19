@@ -1,37 +1,32 @@
-import { Component, useContext, useState } from "react";
+import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { isEmail, isLength } from "validator";
+import { isEmail, isLength, isEmpty } from "validator";
 import apiClient from "../services/api";
 import { Stack, Box, TextField, Button, CircularProgress } from "@mui/material";
 import "../styles/global.css";
 import "../styles/routes/login/view.css";
 
 import React from "react";
-import UserContext from "../contexts/UserContext";
 
 export default function LoginView(props) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [emailError, setEmailError] = useState(false);
-	const [passError, setPassError] = useState(false);
 	const [error, setError] = useState("");
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [errors, setErrors] = useState({
+		email: false,
+		password: false,
+	});
 	const validateFields = () => {
-		if (!isEmail(email)) {
-			setEmailError(true);
-		} else {
-			setEmailError(false);
-		}
-		if (!isLength(password, { min: 8 })) {
-			setPassError(true);
-		} else {
-			setPassError(false);
-		}
+		setErrors({
+			email: isEmpty(email) || !isEmail(email),
+			password: isEmpty(password) || !isLength(password, { min: 8 }),
+		});
 	};
 	const login = () => {
 		validateFields();
-		if (!(emailError && passError)) {
+		if (!(errors["email"] && errors["password"])) {
 			setLoading(true);
 			apiClient.get(`/sanctum/csrf-cookie`).then((res) => {
 				apiClient
@@ -84,9 +79,9 @@ export default function LoginView(props) {
 								validateFields();
 							}}
 							helperText={
-								emailError ? "Please input your correct admin email" : ""
+								errors["email"] ? "Please input your correct admin email" : ""
 							}
-							error={emailError}
+							error={errors["email"]}
 						/>
 
 						<TextField
@@ -100,8 +95,10 @@ export default function LoginView(props) {
 								setPassword(e.target.value);
 								validateFields();
 							}}
-							helperText={passError ? "Please input your password" : ""}
-							error={passError}
+							helperText={
+								errors["password"] ? "Please input your password" : ""
+							}
+							error={errors["password"]}
 						/>
 						<Button variant="outlined" onClick={login}>
 							Login

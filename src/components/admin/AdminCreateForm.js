@@ -1,4 +1,12 @@
-import { Card, CardContent, TextField, Box } from "@mui/material";
+import {
+	Card,
+	CardContent,
+	TextField,
+	Box,
+	Button,
+	Stack,
+	Divider,
+} from "@mui/material";
 import React, { useState } from "react";
 import { isEmail, isLength, isEmpty, isAlphanumeric } from "validator";
 
@@ -27,39 +35,121 @@ export default function AdminCreateForm() {
 			firstName: isEmpty(firstName),
 			lastName: isEmpty(lastName),
 			institution: isEmpty(institutionId),
-			username: isAlphanumeric(username),
-			email: isEmail(email),
-			password: isLength(password, { min: 8 }),
+			username: isEmpty(username) || isAlphanumeric(username),
+			email: isEmpty(email) || !isEmail(email),
+			password: isEmpty(password) || !isLength(password, { min: 8 }),
 		});
 	};
 	const onSubmit = () => {
 		console.log("Sumbitted form");
 	};
 	return (
-		<Box sx={{ width: 100, height: "calc(100vh - 64px)" }}>
-			<Card className="form-card" sx={{ minWidth: "80vw" }}>
-				<CardContent>
-					<form onSubmit={onSubmit}>
-						{/* institution, role, first_name, last_name, address, birthdate, username, email, password */}
-						<TextField
-							required
-							id="outlined"
-							label="First Name"
-							placeholder="John"
-							type="text"
-							// fullWidth
-							onChange={(e) => {
-								setEmail(e.target.value);
-								validateFields();
-							}}
-							helperText={
-								errors["firstName"] ? "Please input your first name" : ""
-							}
-							error={errors["firstName"]}
-						/>
-					</form>
-				</CardContent>
-			</Card>
+		<Box
+			component="form"
+			sx={{
+				"& .MuiTextField-root": { m: 1, width: "30ch" },
+			}}
+			autoComplete="off"
+			display="flex"
+			alignItems="center"
+			justifyContent="center"
+		>
+			{/* institution, role, first_name, last_name, address, birthdate, username, email, password */}
+			<Stack spacing={2}>
+				<TextField
+					required
+					label="First Name"
+					placeholder="John"
+					type="text"
+					// fullWidth
+					onChange={(e) => {
+						setFirstName(e.target.value);
+						validateFields();
+					}}
+					helperText={errors["firstName"] ? "Please input your first name" : ""}
+					error={errors["firstName"]}
+				/>
+				<TextField
+					required
+					label="Last Name"
+					placeholder="Doe"
+					type="text"
+					// fullWidth
+					onChange={(e) => {
+						setLastName(e.target.value);
+						validateFields();
+					}}
+					helperText={errors["lastName"] ? "Please input your last name" : ""}
+					error={errors["lastName"]}
+				/>
+				<Divider />
+				<TextField
+					required
+					label="Email"
+					placeholder="john.doe@counsel.com"
+					type="email"
+					// fullWidth
+					onChange={(e) => {
+						setEmail(e.target.value);
+						validateFields();
+					}}
+					helperText={errors["email"] ? "Please input an email" : ""}
+					error={errors["email"]}
+				/>
+				<TextField
+					label="Password"
+					placeholder="password123"
+					type="password"
+					required
+					onChange={(e) => {
+						setPassword(e.target.value);
+						validateFields();
+					}}
+					helperText={errors["password"] ? "Please input your password" : ""}
+					error={errors["password"]}
+				/>
+				<TextField
+					required
+					label="Username"
+					placeholder="johnDoe123"
+					type="text"
+					// fullWidth
+					onChange={(e) => {
+						setUsername(e.target.value);
+						validateFields();
+					}}
+					helperText={errors["username"] ? "Please input a username" : ""}
+					error={errors["username"]}
+				/>
+				<Divider />
+				<TextField
+					label="Address"
+					placeholder=""
+					type="text"
+					// fullWidth
+					onChange={(e) => {
+						setAddress(e.target.value);
+						validateFields();
+					}}
+				/>
+				<TextField
+					required
+					label="Birthdate"
+					placeholder="Jan 1, 1998"
+					type="date"
+					// fullWidth
+					onChange={(e) => {
+						setBirthdate(e.target.value);
+						validateFields();
+					}}
+					helperText={errors["birthdate"] ? "Please input your birthdate" : ""}
+					error={errors["birthdate"]}
+					InputLabelProps={{
+						shrink: true,
+					}}
+				/>
+				<Button variant="outlined">Register</Button>
+			</Stack>
 		</Box>
 	);
 }

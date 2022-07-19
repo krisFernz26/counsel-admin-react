@@ -86,7 +86,7 @@ export default function LoginView(props) {
 							helperText={
 								emailError ? "Please input your correct admin email" : ""
 							}
-							error={emailError ? true : false}
+							error={emailError}
 						/>
 
 						<TextField
@@ -101,7 +101,7 @@ export default function LoginView(props) {
 								validateFields();
 							}}
 							helperText={passError ? "Please input your password" : ""}
-							error={passError ? true : false}
+							error={passError}
 						/>
 						<Button variant="outlined" onClick={login}>
 							Login

@@ -35,7 +35,7 @@ export default function AdminCreateForm() {
 			firstName: isEmpty(firstName),
 			lastName: isEmpty(lastName),
 			institution: isEmpty(institutionId),
-			username: isEmpty(username) || isAlphanumeric(username),
+			username: isEmpty(username) || !isAlphanumeric(username),
 			email: isEmpty(email) || !isEmail(email),
 			password: isEmpty(password) || !isLength(password, { min: 8 }),
 		});
@@ -47,7 +47,7 @@ export default function AdminCreateForm() {
 		<Box
 			component="form"
 			sx={{
-				"& .MuiTextField-root": { m: 1, width: "30ch" },
+				"& .MuiTextField-root": { m: 1, width: "50ch" },
 			}}
 			autoComplete="off"
 			display="flex"
@@ -133,7 +133,6 @@ export default function AdminCreateForm() {
 					}}
 				/>
 				<TextField
-					required
 					label="Birthdate"
 					placeholder="Jan 1, 1998"
 					type="date"

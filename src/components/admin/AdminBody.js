@@ -10,23 +10,6 @@ export default function AdminBody() {
 	const [users, setUsers] = useState([]);
 	const [nextPageUrl, setNextPageUrl] = useState("");
 	const [tabValue, setTabValue] = useState(0);
-	const [loading, setLoading] = useState(false);
-	const token = JSON.parse(localStorage.getItem("user")).token;
-	const headers = {
-		accept: "application/json",
-		Authorization: "Bearer " + token,
-	};
-
-	const handleNextPage = () => {
-		apiClient
-			.get(nextPageUrl, {
-				headers: headers,
-			})
-			.then((res) => {
-				setUsers(res.data);
-				// setNextPageUrl(res.data);
-			});
-	};
 	const handleChange = (event, newValue) => {
 		setTabValue(newValue);
 	};
@@ -51,21 +34,11 @@ export default function AdminBody() {
 					<Tab label="Register new Admin" {...allyProps(1)} />
 				</Tabs>
 			</Box>
-			{loading ? (
-				<Box
-					display="flex"
-					alignItems="center"
-					justifyContent="center"
-					sx={{ height: "calc(100vh - 64px)" }}
-				>
-					<CircularProgress />
-				</Box>
-			) : (
-				<TabPanel value={tabValue} index={0}>
-					<h3>All Admin Users</h3>
-					<AdminTable />
-				</TabPanel>
-			)}
+			<TabPanel value={tabValue} index={0}>
+				<h3>All Admin Users</h3>
+				<AdminTable />
+			</TabPanel>
+
 			<TabPanel value={tabValue} index={1}>
 				<h3>Register a new admin account</h3>
 				<AdminCreateForm />

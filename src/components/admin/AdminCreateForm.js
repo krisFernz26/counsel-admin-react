@@ -9,13 +9,14 @@ import {
 	CircularProgress,
 	MenuItem,
 } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import React, { useState, useLayoutEffect } from "react";
 import { isEmail, isLength, isEmpty, isAlphanumeric } from "validator";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import apiClient from "../../services/api";
 
 export default function AdminCreateForm() {
 	const [institutionId, setInstitutionId] = useState("1");
-	const [roleId, setRoleId] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [address, setAddress] = useState("");
@@ -47,6 +48,7 @@ export default function AdminCreateForm() {
 			})
 			.then((res) => {
 				setInstitutions(res.data);
+				validateFields();
 				setLoading(false);
 			});
 	}, []);
@@ -60,9 +62,35 @@ export default function AdminCreateForm() {
 			email: isEmpty(email) || !isEmail(email),
 			password: isEmpty(password) || !isLength(password, { min: 8 }),
 		});
+		return !Object.values(errors).includes(true);
 	};
 	const onSubmit = () => {
-		console.log("Sumbitted form");
+		validateFields() ? registerUser() : console.log("Check your info");
+	};
+	const registerUser = () => {
+		setLoading(true);
+		apiClient
+			.post(
+				"/api/register",
+				{
+					first_name: firstName,
+					last_name: lastName,
+					institution_id: institutionId,
+					role_id: 1,
+					address: address,
+					birthdate: birthdate,
+					email: email,
+					password: password,
+					username: username,
+				},
+				{
+					headers: headers,
+				}
+			)
+			.then((res) => {
+				console.log(res);
+				setLoading(false);
+			});
 	};
 	return (
 		<Box
@@ -180,23 +208,27 @@ export default function AdminCreateForm() {
 							validateFields();
 						}}
 					/>
-					<TextField
-						label="Birthdate"
-						type="date"
-						// fullWidth
-						onChange={(e) => {
-							setBirthdate(e.target.value);
-							validateFields();
-						}}
-						helperText={
-							errors["birthdate"] ? "Please input your birthdate" : ""
-						}
-						error={errors["birthdate"]}
-						InputLabelProps={{
-							shrink: true,
-						}}
-					/>
-					<Button variant="outlined">Create new admin account</Button>
+					<LocalizationProvider dateAdapter={AdapterMoment}>
+						<TextField
+							label="Birthdate"
+							type="date"
+							// fullWidth
+							onChange={(e) => {
+								setBirthdate(e.target.value);
+								validateFields();
+							}}
+							helperText={
+								errors["birthdate"] ? "Please input your birthdate" : ""
+							}
+							error={errors["birthdate"]}
+							InputLabelProps={{
+								shrink: true,
+							}}
+						/>
+					</LocalizationProvider>
+					<Button variant="outlined" onClick={onSubmit}>
+						Create new admin account
+					</Button>
 				</Stack>
 			)}
 		</Box>

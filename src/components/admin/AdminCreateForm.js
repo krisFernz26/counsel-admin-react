@@ -9,12 +9,12 @@ import {
 	CircularProgress,
 	MenuItem,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { isEmail, isLength, isEmpty, isAlphanumeric } from "validator";
 import apiClient from "../../services/api";
 
 export default function AdminCreateForm() {
-	const [institutionId, setInstitutionId] = useState("");
+	const [institutionId, setInstitutionId] = useState("1");
 	const [roleId, setRoleId] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
@@ -39,7 +39,7 @@ export default function AdminCreateForm() {
 		accept: "application/json",
 		Authorization: "Bearer " + token,
 	};
-	useEffect(() => {
+	useLayoutEffect(() => {
 		setLoading(true);
 		apiClient
 			.get("/api/institutions/names", {
@@ -93,10 +93,13 @@ export default function AdminCreateForm() {
 							errors["institution"] ? "Please choose your institution" : ""
 						}
 						error={errors["institution"]}
-						defaultValue={1}
+						value={institutionId}
 					>
 						{institutions.map((institution) => (
-							<MenuItem key={institution["id"]} value={institution["id"]}>
+							<MenuItem
+								key={institution["id"]}
+								value={institution["id"].toString()}
+							>
 								{institution["name"]}
 							</MenuItem>
 						))}

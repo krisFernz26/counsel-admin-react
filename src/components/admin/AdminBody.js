@@ -16,17 +16,6 @@ export default function AdminBody() {
 		accept: "application/json",
 		Authorization: "Bearer " + token,
 	};
-	useEffect(() => {
-		setLoading(true);
-		apiClient
-			.get("/api/users?role_id=1", {
-				headers: headers,
-			})
-			.then((res) => {
-				setUsers(res.data);
-				setLoading(false);
-			});
-	}, []);
 
 	const handleNextPage = () => {
 		apiClient
@@ -74,7 +63,7 @@ export default function AdminBody() {
 			) : (
 				<TabPanel value={tabValue} index={0}>
 					<h3>All Admin Users</h3>
-					<AdminTable users={users} />
+					<AdminTable />
 				</TabPanel>
 			)}
 			<TabPanel value={tabValue} index={1}>

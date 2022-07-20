@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Box,
 	Button,
@@ -8,12 +8,15 @@ import {
 	DialogTitle,
 	DialogContent,
 	DialogContentText,
+	CircularProgress,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Moment from "moment";
 import apiClient from "../../services/api";
 
-export default function AdminTable({ users }) {
+export default function AdminTable() {
+	const [users, setUsers] = useState([]);
+	const [loading, setLoading] = useState(false);
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 	const [deleteSuccessDialogOpen, setDeleteSuccessDialogOpen] = useState(false);
 	const token = JSON.parse(localStorage.getItem("user")).token;
@@ -21,6 +24,17 @@ export default function AdminTable({ users }) {
 		accepts: "application/json",
 		Authorization: `Bearer ${token}`,
 	};
+	useEffect(() => {
+		setLoading(true);
+		apiClient
+			.get("/api/users?role_id=1", {
+				headers: headers,
+			})
+			.then((res) => {
+				setUsers(res.data);
+				setLoading(false);
+			});
+	}, []);
 	const columns = [
 		{ field: "id", headerName: "ID", flex: 0.5 },
 		{ field: "institutionID", headerName: "Institution ID", flex: 0.5 },
@@ -175,14 +189,18 @@ export default function AdminTable({ users }) {
 					</Button>
 				</DialogActions>
 			</Dialog>
-			<DataGrid
-				rows={rows}
-				columns={columns}
-				pageSize={15}
-				rowsPerPageOptions={[15]}
-				disableSelectionOnClick
-				centered
-			/>
+			{!loading ? (
+				<DataGrid
+					rows={rows}
+					columns={columns}
+					pageSize={15}
+					rowsPerPageOptions={[15]}
+					disableSelectionOnClick
+					centered
+				/>
+			) : (
+				<CircularProgress />
+			)}
 		</Box>
 	);
 }

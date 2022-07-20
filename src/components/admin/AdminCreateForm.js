@@ -8,6 +8,7 @@ import {
 	Divider,
 	CircularProgress,
 	MenuItem,
+	Alert,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import React, { useState, useLayoutEffect } from "react";
@@ -26,6 +27,11 @@ export default function AdminCreateForm() {
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [institutions, setInstitutions] = useState([]);
+	const [successAlert, setSuccessAlert] = useState(false);
+	const [errorAlert, setErrorAlert] = useState({
+		value: false,
+		message: "Error",
+	});
 	const [errors, setErrors] = useState({
 		institution: false,
 		email: false,
@@ -65,7 +71,9 @@ export default function AdminCreateForm() {
 		return !Object.values(errors).includes(true);
 	};
 	const onSubmit = () => {
-		validateFields() ? registerUser() : console.log("Check your info");
+		validateFields()
+			? registerUser()
+			: setErrorAlert({ value: true, message: "Input correct data" });
 	};
 	const registerUser = () => {
 		setLoading(true);
@@ -89,6 +97,13 @@ export default function AdminCreateForm() {
 			)
 			.then((res) => {
 				console.log(res);
+				if (res["status"] == 201) {
+					setErrorAlert({ value: false, message: "" });
+					setSuccessAlert(true);
+				} else {
+					setSuccessAlert(false);
+					setErrorAlert({ value: true, message: "Account creation failed" });
+				}
 				setLoading(false);
 			});
 	};
@@ -108,6 +123,32 @@ export default function AdminCreateForm() {
 				<CircularProgress />
 			) : (
 				<Stack spacing={2}>
+					{successAlert || errorAlert ? (
+						<Box mb={"20px"}>
+							{successAlert ? (
+								<Alert
+									severity="success"
+									onClose={() => setSuccessAlert(false)}
+								>
+									Admin account created successfully
+								</Alert>
+							) : (
+								""
+							)}
+							{errorAlert["value"] ? (
+								<Alert
+									severity="error"
+									onClose={() => setErrorAlert({ value: false, message: "" })}
+								>
+									{errorAlert["message"]}
+								</Alert>
+							) : (
+								""
+							)}
+						</Box>
+					) : (
+						""
+					)}
 					<TextField
 						required
 						select

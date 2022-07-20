@@ -37,13 +37,6 @@ export default function AdminTable() {
 	}, []);
 	const columns = [
 		{ field: "id", headerName: "ID", flex: 0.5 },
-		{ field: "institutionID", headerName: "Institution ID", flex: 0.5 },
-		{
-			field: "institutionName",
-			headerName: "Institution",
-			editable: false,
-			flex: 1,
-		},
 		{
 			field: "firstName",
 			headerName: "First name",
@@ -105,8 +98,6 @@ export default function AdminTable() {
 	const rows = users.map((user) => {
 		return {
 			id: user.id,
-			institutionID: user.institution.id,
-			institutionName: user.institution.name,
 			firstName: user.first_name,
 			lastName: user.last_name,
 			fullName: user.first_name + " " + user.last_name,

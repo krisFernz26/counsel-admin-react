@@ -17,7 +17,7 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import apiClient from "../../services/api";
 
 export default function AdminCreateForm() {
-	const [institutionId, setInstitutionId] = useState("1");
+	const [institutionId, setInstitutionId] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [address, setAddress] = useState("");
@@ -26,14 +26,14 @@ export default function AdminCreateForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [institutions, setInstitutions] = useState([]);
+	// const [institutions, setInstitutions] = useState([]);
 	const [successAlert, setSuccessAlert] = useState(false);
 	const [errorAlert, setErrorAlert] = useState({
 		value: false,
 		message: "Error",
 	});
 	const [errors, setErrors] = useState({
-		institution: false,
+		// institution: false,
 		email: false,
 		password: false,
 		username: false,
@@ -46,24 +46,24 @@ export default function AdminCreateForm() {
 		accept: "application/json",
 		Authorization: "Bearer " + token,
 	};
-	useLayoutEffect(() => {
-		setLoading(true);
-		apiClient
-			.get("/api/institutions/names", {
-				headers: headers,
-			})
-			.then((res) => {
-				setInstitutions(res.data);
-				validateFields();
-				setLoading(false);
-			});
-	}, []);
+	// useLayoutEffect(() => {
+	// 	setLoading(true);
+	// 	apiClient
+	// 		.get("/api/institutions/names", {
+	// 			headers: headers,
+	// 		})
+	// 		.then((res) => {
+	// 			setInstitutions(res.data);
+	// 			validateFields();
+	// 			setLoading(false);
+	// 		});
+	// }, []);
 
 	const validateFields = () => {
 		setErrors({
 			firstName: isEmpty(firstName),
 			lastName: isEmpty(lastName),
-			institution: isEmpty(institutionId),
+			// institution: isEmpty(institutionId),
 			username: isEmpty(username) || !isAlphanumeric(username),
 			email: isEmpty(email) || !isEmail(email),
 			password: isEmpty(password) || !isLength(password, { min: 8 }),
@@ -83,7 +83,8 @@ export default function AdminCreateForm() {
 				{
 					first_name: firstName,
 					last_name: lastName,
-					institution_id: institutionId,
+					institution_id: 1,
+					// institution_id: institutionId,
 					role_id: 1,
 					address: address,
 					birthdate: birthdate,
@@ -149,7 +150,7 @@ export default function AdminCreateForm() {
 					) : (
 						""
 					)}
-					<TextField
+					{/* <TextField
 						required
 						select
 						label="Institution Name"
@@ -172,7 +173,7 @@ export default function AdminCreateForm() {
 								{institution["name"]}
 							</MenuItem>
 						))}
-					</TextField>
+					</TextField> */}
 					<TextField
 						required
 						label="First Name"

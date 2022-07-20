@@ -7,8 +7,6 @@ import TabPanel from "../global/TabPanel";
 import apiClient from "../../services/api";
 
 export default function AdminBody() {
-	const [users, setUsers] = useState([]);
-	const [nextPageUrl, setNextPageUrl] = useState("");
 	const [tabValue, setTabValue] = useState(0);
 	const handleChange = (event, newValue) => {
 		setTabValue(newValue);

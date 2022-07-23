@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Tabs, Tab, CircularProgress, TextField } from "@mui/material";
 import AdminTable from "./AdminTable";
 import AdminCreateForm from "./AdminCreateForm";
-import AdminUpdateForm from "./AdminUpdateForm";
 import TabPanel from "../global/TabPanel";
-import apiClient from "../../services/api";
 
 export default function AdminBody() {
 	const [tabValue, setTabValue] = useState(0);

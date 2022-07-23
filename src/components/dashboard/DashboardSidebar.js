@@ -245,42 +245,15 @@ export default function DashboardSidebar(props) {
 											)}
 											{index == 0 ? (
 												<>
-													<ListItem key={index + "Create"}>
+													<ListItem key={index + "all"}>
 														<ListItemButton
 															sx={{ pl: 4 }}
 															onClick={() => {
-																props.changePage(
-																	text.toLowerCase() + "-create"
-																);
+																props.changePage(text.toLowerCase() + "-all");
 																props.toggleSidebar();
 															}}
 															disabled={
-																props.currentPage[
-																	text.toLowerCase() + "-create"
-																]
-																	? true
-																	: false
-															}
-														>
-															<ListItemIcon>
-																<AddBoxOutlined />
-															</ListItemIcon>
-															<ListItemText primary={"Register"} />
-														</ListItemButton>
-													</ListItem>
-													<ListItem key={index + "Approval"}>
-														<ListItemButton
-															sx={{ pl: 4 }}
-															onClick={() => {
-																props.changePage(
-																	text.toLowerCase() + "-approval"
-																);
-																props.toggleSidebar();
-															}}
-															disabled={
-																props.currentPage[
-																	text.toLowerCase() + "-approval"
-																]
+																props.currentPage[text.toLowerCase() + "-all"]
 																	? true
 																	: false
 															}
@@ -288,7 +261,7 @@ export default function DashboardSidebar(props) {
 															<ListItemIcon>
 																<CheckBoxOutlined />
 															</ListItemIcon>
-															<ListItemText primary={"Approval"} />
+															<ListItemText primary={"All Institutions"} />
 														</ListItemButton>
 													</ListItem>
 												</>

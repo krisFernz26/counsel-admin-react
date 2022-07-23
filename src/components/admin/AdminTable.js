@@ -38,6 +38,13 @@ export default function AdminTable() {
 	const columns = [
 		{ field: "id", headerName: "ID", flex: 0.5 },
 		{
+			field: "email",
+			headerName: "Email",
+			sortable: true,
+			editable: false,
+			flex: 1,
+		},
+		{
 			field: "firstName",
 			headerName: "First name",
 			sortable: true,
@@ -81,6 +88,8 @@ export default function AdminTable() {
 			headerName: "Actions",
 			flex: 1.25,
 			alignItems: "right",
+			sortable: false,
+			editable: false,
 			renderCell: (params) => {
 				return (
 					<Box>
@@ -98,6 +107,7 @@ export default function AdminTable() {
 	const rows = users.map((user) => {
 		return {
 			id: user.id,
+			email: user.email,
 			firstName: user.first_name,
 			lastName: user.last_name,
 			fullName: user.first_name + " " + user.last_name,

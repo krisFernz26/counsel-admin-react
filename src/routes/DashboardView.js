@@ -18,19 +18,23 @@ export default function DashboardView(props) {
 		landing: true,
 	});
 
-	useLayoutEffect(() => {
-		if (user == null) {
-			setIsLoggedIn(false);
-		} else {
-			headers = {
-				accept: "application/json",
-				Authorization: "Bearer " + user.token,
-			};
-		}
-	}, []);
+	// useLayoutEffect(() => {
+	// 	if (user == null) {
+	// 		setIsLoggedIn(false);
+	// 	} else {
+	// 		headers = {
+	// 			accept: "application/json",
+	// 			Authorization: "Bearer " + user.token,
+	// 		};
+	// 	}
+	// }, []);
 
 	const logout = () => {
 		setLoading(true);
+		headers = {
+			accept: "application/json",
+			Authorization: "Bearer " + user.token,
+		};
 		apiClient
 			.get("/api/logout", { headers: headers })
 			.then((res) => {

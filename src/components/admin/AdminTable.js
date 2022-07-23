@@ -13,12 +13,15 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import Moment from "moment";
 import apiClient from "../../services/api";
+import AdminModalForm from "./AdminModalForm";
 
 export default function AdminTable() {
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 	const [adminId, setAdminId] = useState("");
+	const [updateModalOpen, setUpdateModalOpen] = useState(false);
+	const [successUpdateDialogOpen, setSuccessUpdateDialogOpen] = useState(false);
 	const [deleteSuccessDialogOpen, setDeleteSuccessDialogOpen] = useState(false);
 	const token = JSON.parse(localStorage.getItem("user")).token;
 	const headers = {
@@ -98,7 +101,15 @@ export default function AdminTable() {
 				return (
 					<Box>
 						<ButtonGroup variant="text">
-							<Button color="success">Update</Button>
+							<Button
+								color="success"
+								onClick={() => {
+									setAdminId(params.id);
+									handleOnUpdateButtonClick();
+								}}
+							>
+								Update
+							</Button>
 							<Button
 								color="error"
 								onClick={() => {
@@ -130,9 +141,20 @@ export default function AdminTable() {
 	const handleOnDeleteButtonClick = () => {
 		setDeleteDialogOpen(true);
 	};
+	const handleOnUpdateButtonClick = () => {
+		setUpdateModalOpen(true);
+	};
+	const handleOnUpdateModalClose = () => {
+		setAdminId("");
+		setUpdateModalOpen(false);
+	};
 	const handleOnDeleteDialogClose = () => {
 		setAdminId("");
 		setDeleteDialogOpen(false);
+	};
+	const handleOnUpdateSuccessDialogClose = () => {
+		setAdminId("");
+		setSuccessUpdateDialogOpen(false);
 	};
 	const handleOnDeleteSuccessDialogClose = () => {
 		setAdminId("");
@@ -151,6 +173,19 @@ export default function AdminTable() {
 				setDeleteSuccessDialogOpen(true);
 			});
 	};
+	const updateUser = (data) => {
+		setLoading(true);
+		apiClient
+			.put(`/api/users/${adminId}`, data, {
+				headers: headers,
+			})
+			.then((res) => {
+				getUsers();
+				setLoading(false);
+				setUpdateModalOpen(false);
+				setSuccessUpdateDialogOpen(true);
+			});
+	};
 	return (
 		<Box
 			sx={{ height: 400 }}
@@ -161,6 +196,31 @@ export default function AdminTable() {
 			ml="50px"
 			mr="50px"
 		>
+			<Dialog
+				open={successUpdateDialogOpen}
+				onClose={handleOnUpdateSuccessDialogClose}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle id="alert-dialog-title">
+					{"Admin account updated"}
+				</DialogTitle>
+				<DialogActions>
+					<Button onClick={handleOnUpdateSuccessDialogClose} color="success">
+						OK
+					</Button>
+				</DialogActions>
+			</Dialog>
+			{adminId ? (
+				<AdminModalForm
+					adminId={adminId}
+					handleOnUpdateModalClose={handleOnUpdateModalClose}
+					updateModalOpen={updateModalOpen}
+					updateUser={updateUser}
+				/>
+			) : (
+				""
+			)}
 			<Dialog
 				open={deleteSuccessDialogOpen}
 				onClose={handleOnDeleteSuccessDialogClose}

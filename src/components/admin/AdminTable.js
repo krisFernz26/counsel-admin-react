@@ -18,14 +18,14 @@ export default function AdminTable() {
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+	const [adminId, setAdminId] = useState("");
 	const [deleteSuccessDialogOpen, setDeleteSuccessDialogOpen] = useState(false);
 	const token = JSON.parse(localStorage.getItem("user")).token;
 	const headers = {
 		accepts: "application/json",
 		Authorization: `Bearer ${token}`,
 	};
-	useEffect(() => {
-		setLoading(true);
+	const getUsers = () => {
 		apiClient
 			.get("/api/users?role_id=1", {
 				headers: headers,
@@ -34,6 +34,10 @@ export default function AdminTable() {
 				setUsers(res.data);
 				setLoading(false);
 			});
+	};
+	useEffect(() => {
+		setLoading(true);
+		getUsers();
 	}, []);
 	const columns = [
 		{ field: "id", headerName: "ID", flex: 0.5 },
@@ -95,7 +99,13 @@ export default function AdminTable() {
 					<Box>
 						<ButtonGroup variant="text">
 							<Button color="success">Update</Button>
-							<Button color="error" onClick={handleOnDeleteButtonClick}>
+							<Button
+								color="error"
+								onClick={() => {
+									setAdminId(params.id);
+									handleOnDeleteButtonClick();
+								}}
+							>
 								Delete
 							</Button>
 						</ButtonGroup>
@@ -121,18 +131,22 @@ export default function AdminTable() {
 		setDeleteDialogOpen(true);
 	};
 	const handleOnDeleteDialogClose = () => {
+		setAdminId("");
 		setDeleteDialogOpen(false);
 	};
 	const handleOnDeleteSuccessDialogClose = () => {
+		setAdminId("");
 		setDeleteSuccessDialogOpen(false);
 	};
 	const deleteUser = (id) => {
+		setLoading(true);
 		apiClient
 			.delete(`/api/users/${id}`, {
 				headers: headers,
 			})
 			.then((res) => {
-				console.log(res);
+				getUsers();
+				setLoading(false);
 				setDeleteDialogOpen(false);
 				setDeleteSuccessDialogOpen(true);
 			});
@@ -182,7 +196,7 @@ export default function AdminTable() {
 					</Button>
 					<Button
 						onClick={() => {
-							deleteUser(48);
+							deleteUser(adminId);
 						}}
 						color="error"
 					>

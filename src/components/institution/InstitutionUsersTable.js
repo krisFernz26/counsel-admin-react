@@ -12,8 +12,8 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Moment from "moment";
-import InstitutionUsersUpdateModal from "./InstitutionUsersUpdateModal";
 import apiClient from "../../services/api";
+import UserUpdateModal from "../global/UserUpdateModal";
 
 export default function InstitutionUsersTable() {
 	const [users, setUsers] = useState([]);
@@ -220,7 +220,7 @@ export default function InstitutionUsersTable() {
 				</DialogActions>
 			</Dialog>
 			{userId ? (
-				<InstitutionUsersUpdateModal
+				<UserUpdateModal
 					userId={userId}
 					handleOnUpdateModalClose={handleOnUpdateModalClose}
 					updateModalOpen={updateModalOpen}

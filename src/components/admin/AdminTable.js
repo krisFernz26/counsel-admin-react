@@ -13,7 +13,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import Moment from "moment";
 import apiClient from "../../services/api";
-import AdminModalForm from "./AdminModalForm";
+import UserUpdateModal from "../global/UserUpdateModal";
 
 export default function AdminTable() {
 	const [users, setUsers] = useState([]);
@@ -212,8 +212,8 @@ export default function AdminTable() {
 				</DialogActions>
 			</Dialog>
 			{adminId ? (
-				<AdminModalForm
-					adminId={adminId}
+				<UserUpdateModal
+					userId={adminId}
 					handleOnUpdateModalClose={handleOnUpdateModalClose}
 					updateModalOpen={updateModalOpen}
 					updateUser={updateUser}

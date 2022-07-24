@@ -14,7 +14,7 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { isEmail, isLength, isEmpty, isAlphanumeric } from "validator";
 import apiClient from "../../services/api";
 
-export default function InstitutionUsersUpdateModal({
+export default function UserUpdateModal({
 	userId,
 	updateModalOpen,
 	handleOnUpdateModalClose,

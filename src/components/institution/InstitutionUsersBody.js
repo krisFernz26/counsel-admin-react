@@ -31,12 +31,10 @@ export default function InstitutionUsersBody() {
 				</Tabs>
 			</Box>
 			<TabPanel value={tabValue} index={0}>
-				<h3>All Institution Users</h3>
 				<InstitutionUsersTable />
 			</TabPanel>
 
 			<TabPanel value={tabValue} index={1}>
-				<h3>Register new Institution User</h3>
 				<InstitutionUserCreateForm />
 			</TabPanel>
 		</>

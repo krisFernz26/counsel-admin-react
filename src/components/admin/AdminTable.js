@@ -193,6 +193,7 @@ export default function AdminTable() {
 			justifyContent="center"
 			alignItems="center"
 			minHeight="100vh"
+			mt="50px"
 			ml="50px"
 			mr="50px"
 		>

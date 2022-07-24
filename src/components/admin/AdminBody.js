@@ -31,12 +31,10 @@ export default function AdminBody() {
 				</Tabs>
 			</Box>
 			<TabPanel value={tabValue} index={0}>
-				<h3>All Admin Users</h3>
 				<AdminTable />
 			</TabPanel>
 
 			<TabPanel value={tabValue} index={1}>
-				<h3>Register a new admin account</h3>
 				<AdminCreateForm />
 			</TabPanel>
 		</>

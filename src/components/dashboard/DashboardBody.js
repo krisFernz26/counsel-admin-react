@@ -3,8 +3,8 @@ import { Box } from "@mui/material";
 import Landing from "../landing/Landing";
 import Profile from "../profile/Profile";
 import AdminBody from "../admin/AdminBody";
-import InstitutionUsersTable from "../institution/InstitutionUsersTable";
-import InstitutionsTable from "../institution/InstitutionsTable";
+import InstitutionUsersBody from "../institution/InstitutionUsersBody";
+import InstitutionsBody from "../institution/InstitutionsBody";
 
 export default function DashboardBody(props) {
 	return (
@@ -14,8 +14,8 @@ export default function DashboardBody(props) {
 
 			{props.currentPage["admin-users"] ? <AdminBody /> : ""}
 
-			{props.currentPage["institutions-users"] ? <InstitutionUsersTable /> : ""}
-			{props.currentPage["institutions-all"] ? <InstitutionsTable /> : ""}
+			{props.currentPage["institutions-users"] ? <InstitutionUsersBody /> : ""}
+			{props.currentPage["institutions-all"] ? <InstitutionsBody /> : ""}
 
 			{props.currentPage["counselors-users"] ? <div>Counselors Users</div> : ""}
 			{props.currentPage["counselors-appointments"] ? (

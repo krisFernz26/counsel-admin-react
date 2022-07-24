@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Moment from "moment";
+import InstitutionUsersUpdateModal from "./InstitutionUsersUpdateModal";
 import apiClient from "../../services/api";
 
 export default function InstitutionUsersTable() {
@@ -218,8 +219,8 @@ export default function InstitutionUsersTable() {
 					</Button>
 				</DialogActions>
 			</Dialog>
-			{/* {userId ? (
-				<AdminModalForm
+			{userId ? (
+				<InstitutionUsersUpdateModal
 					userId={userId}
 					handleOnUpdateModalClose={handleOnUpdateModalClose}
 					updateModalOpen={updateModalOpen}
@@ -227,7 +228,7 @@ export default function InstitutionUsersTable() {
 				/>
 			) : (
 				""
-			)} */}
+			)}
 			<Dialog
 				open={deleteSuccessDialogOpen}
 				onClose={handleOnDeleteSuccessDialogClose}

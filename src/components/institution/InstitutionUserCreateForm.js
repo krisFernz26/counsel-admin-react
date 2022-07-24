@@ -93,7 +93,6 @@ export default function InstitutionUserCreateForm() {
 				}
 			)
 			.then((res) => {
-				console.log(res);
 				if (res["status"] == 201) {
 					setErrorAlert({ value: false, message: "" });
 					setSuccessAlert(true);

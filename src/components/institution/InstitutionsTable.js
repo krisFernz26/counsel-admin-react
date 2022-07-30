@@ -13,7 +13,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import Moment from "moment";
 import apiClient from "../../services/api";
-import UserUpdateModal from "../global/UserUpdateModal";
+import InstitutionUpdateModal from "./InstitutionUpdateModal";
 
 export default function InstitutionsTable() {
 	const [institutions, setInstitutions] = useState([]);
@@ -107,7 +107,9 @@ export default function InstitutionsTable() {
 			headerName: "No. of Users",
 			sortable: true,
 			editable: false,
+			alignItems: "center",
 			flex: 1,
+			type: "number",
 		},
 		{
 			field: "actions",
@@ -149,7 +151,7 @@ export default function InstitutionsTable() {
 			id: institution.id,
 			name: institution.name,
 			approvedAt: institution.approved_at,
-			contactPerson: institution.contact_person,
+			contactPerson: institution.contact_person_name,
 			contactPersonNumber: institution.contact_person_no,
 			contactNumber: institution.contact_no,
 			contactEmail: institution.contact_email,
@@ -194,7 +196,7 @@ export default function InstitutionsTable() {
 				setDeleteSuccessDialogOpen(true);
 			});
 	};
-	const updateUser = (data) => {
+	const updateInstitution = (data) => {
 		setLoading(true);
 		apiClient
 			.put(`/api/institutions/${institutionId}`, data, {
@@ -225,7 +227,7 @@ export default function InstitutionsTable() {
 				aria-describedby="alert-dialog-description"
 			>
 				<DialogTitle id="alert-dialog-title">
-					{"User account updated"}
+					{"Institution updated"}
 				</DialogTitle>
 				<DialogActions>
 					<Button onClick={handleOnUpdateSuccessDialogClose} color="success">
@@ -234,11 +236,11 @@ export default function InstitutionsTable() {
 				</DialogActions>
 			</Dialog>
 			{institutionId ? (
-				<UserUpdateModal
+				<InstitutionUpdateModal
 					institutionId={institutionId}
 					handleOnUpdateModalClose={handleOnUpdateModalClose}
 					updateModalOpen={updateModalOpen}
-					updateUser={updateUser}
+					updateInstitution={updateInstitution}
 				/>
 			) : (
 				""
@@ -250,7 +252,7 @@ export default function InstitutionsTable() {
 				aria-describedby="alert-dialog-description"
 			>
 				<DialogTitle id="alert-dialog-title">
-					{"User account deleted"}
+					{"Institution deleted"}
 				</DialogTitle>
 				<DialogActions>
 					<Button onClick={handleOnDeleteSuccessDialogClose} color="success">
@@ -265,11 +267,11 @@ export default function InstitutionsTable() {
 				aria-describedby="alert-dialog-description"
 			>
 				<DialogTitle id="alert-dialog-title">
-					{"Delete admin account?"}
+					{"Delete institution?"}
 				</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">
-						Are you sure you want to delete this institution account?
+						Are you sure you want to delete this institution?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>

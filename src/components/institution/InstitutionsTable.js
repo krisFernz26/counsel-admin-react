@@ -107,9 +107,8 @@ export default function InstitutionsTable() {
 			headerName: "No. of Users",
 			sortable: true,
 			editable: false,
-			alignItems: "center",
 			flex: 1,
-			type: "number",
+			// type: "number",
 		},
 		{
 			field: "actions",

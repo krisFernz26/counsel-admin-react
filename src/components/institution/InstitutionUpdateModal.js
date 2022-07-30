@@ -60,7 +60,7 @@ export default function InstitutionUpdateModal({
 	const validateFields = () => {
 		setErrors({
 			name: isEmpty(institutionInfo["name"]),
-			contact_email: isEmail(institutionInfo["contact_email"]),
+			contact_email: !isEmail(institutionInfo["contact_email"]),
 			// institution: isEmpty(institutionId),
 		});
 		return !Object.values(errors).includes(true);

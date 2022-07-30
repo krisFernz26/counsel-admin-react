@@ -68,16 +68,18 @@ export default function UserUpdateModal({
 		return !Object.values(errors).includes(true);
 	};
 	const onSubmit = () => {
-		handleOnUpdateModalClose();
-		validateFields()
-			? updateUser({
-					first_name: userInfo["first_name"],
-					last_name: userInfo["last_name"],
-					address: userInfo["address"] ?? null,
-					birthdate: userInfo["birthdate"] ?? null,
-			  })
-			: //   console.log(userInfo)
-			  setErrorAlert({ value: true, message: "Input correct data" });
+		if (validateFields()) {
+			updateUser({
+				first_name: userInfo["first_name"],
+				last_name: userInfo["last_name"],
+				address: userInfo["address"] ?? null,
+				birthdate: userInfo["birthdate"] ?? null,
+			});
+			handleOnUpdateModalClose();
+		} else {
+			//   console.log(userInfo)
+			setErrorAlert({ value: true, message: "Input correct data" });
+		}
 	};
 	return (
 		<>

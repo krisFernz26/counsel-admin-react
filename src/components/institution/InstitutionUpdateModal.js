@@ -66,18 +66,20 @@ export default function InstitutionUpdateModal({
 		return !Object.values(errors).includes(true);
 	};
 	const onSubmit = () => {
-		handleOnUpdateModalClose();
-		validateFields()
-			? updateInstitution({
-					name: institutionInfo["name"],
-					address: institutionInfo["address"],
-					contact_person_name: institutionInfo["contact_person_name"],
-					contact_no: institutionInfo["contact_no"],
-					contact_email: institutionInfo["contact_email"],
-					contact_person_no: institutionInfo["contact_person_no"],
-			  })
-			: //   console.log(institutionInfo)
-			  setErrorAlert({ value: true, message: "Input correct data" });
+		if (validateFields()) {
+			updateInstitution({
+				name: institutionInfo["name"],
+				address: institutionInfo["address"],
+				contact_person_name: institutionInfo["contact_person_name"],
+				contact_no: institutionInfo["contact_no"],
+				contact_email: institutionInfo["contact_email"],
+				contact_person_no: institutionInfo["contact_person_no"],
+			});
+			handleOnUpdateModalClose();
+		} else {
+			//   console.log(institutionInfo)
+			setErrorAlert({ value: true, message: "Input correct data" });
+		}
 	};
 	return (
 		<>
@@ -134,7 +136,7 @@ export default function InstitutionUpdateModal({
 									validateFields();
 								}}
 								helperText={
-									errors["Name"] ? "Please input the institution name" : ""
+									errors["name"] ? "Please input the institution name" : ""
 								}
 								error={errors["Name"]}
 								InputLabelProps={{

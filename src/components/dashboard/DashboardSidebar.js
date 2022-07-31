@@ -1,7 +1,6 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import {
 	Box,
-	IconButton,
 	Drawer,
 	List,
 	ListItem,
@@ -18,14 +17,11 @@ import {
 	ChildCareOutlined,
 	ExpandLessOutlined,
 	ExpandMoreOutlined,
-	StarBorder,
 	ScheduleOutlined,
 	VideoCallOutlined,
-	AccountCircleOutlined,
 	CheckBoxOutlined,
 	NoteAltOutlined,
 	HomeOutlined,
-	AddBoxOutlined,
 } from "@mui/icons-material";
 
 export default function DashboardSidebar(props) {

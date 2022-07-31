@@ -17,6 +17,7 @@ export default function InstitutionUpdateModal({
 	updateModalOpen,
 	handleOnUpdateModalClose,
 	updateInstitution,
+	approveInstitution,
 }) {
 	const token = JSON.parse(localStorage.getItem("user")).token;
 	const [institutionInfo, setInstitutionInfo] = useState({});
@@ -58,7 +59,7 @@ export default function InstitutionUpdateModal({
 	const validateFields = () => {
 		setErrors({
 			name: isEmpty(institutionInfo["name"]),
-			contact_email: !isEmail(institutionInfo["contact_email"]),
+			// contact_email: !isEmail(institutionInfo["contact_email"]),
 			// institution: isEmpty(institutionId),
 		});
 		return !Object.values(errors).includes(true);
@@ -226,6 +227,17 @@ export default function InstitutionUpdateModal({
 									shrink: true,
 								}}
 							/>
+							{institutionInfo["approved_at"] === null ? (
+								<Button
+									variant="outlined"
+									color="success"
+									onClick={approveInstitution}
+								>
+									Approve institution
+								</Button>
+							) : (
+								""
+							)}
 							<Button variant="outlined" onClick={onSubmit}>
 								Update institution info
 							</Button>

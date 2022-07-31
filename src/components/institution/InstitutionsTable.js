@@ -208,6 +208,25 @@ export default function InstitutionsTable() {
 				setSuccessUpdateDialogOpen(true);
 			});
 	};
+	const approveInstitution = () => {
+		setLoading(true);
+		if (validateFields()) {
+			apiClient
+				.put(
+					`/api/institutions/${institutionId}/approve`,
+					{},
+					{
+						headers: headers,
+					}
+				)
+				.then((res) => {
+					getInstitutions();
+					setLoading(false);
+					setUpdateModalOpen(false);
+					setSuccessUpdateDialogOpen(true);
+				});
+		}
+	};
 	return (
 		<Box
 			sx={{ height: 400 }}
@@ -240,6 +259,7 @@ export default function InstitutionsTable() {
 					handleOnUpdateModalClose={handleOnUpdateModalClose}
 					updateModalOpen={updateModalOpen}
 					updateInstitution={updateInstitution}
+					approveInstitution={approveInstitution}
 				/>
 			) : (
 				""

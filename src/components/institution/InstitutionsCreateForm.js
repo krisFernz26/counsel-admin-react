@@ -39,7 +39,6 @@ export default function InstitutionsCreateForm() {
 	const validateFields = () => {
 		setErrors({
 			name: isEmpty(name),
-			contactEmail: !isEmail(contactEmail),
 		});
 		return !Object.values(errors).includes(true);
 	};
@@ -93,7 +92,6 @@ export default function InstitutionsCreateForm() {
 			alignItems="center"
 			justifyContent="center"
 		>
-			{/* institution, role, first_name, last_name, address, birthdate, username, email, password */}
 			{loading ? (
 				<CircularProgress />
 			) : (
@@ -105,7 +103,7 @@ export default function InstitutionsCreateForm() {
 									severity="success"
 									onClose={() => setSuccessAlert(false)}
 								>
-									User account created successfully
+									Institution created successfully
 								</Alert>
 							) : (
 								""
@@ -168,10 +166,6 @@ export default function InstitutionsCreateForm() {
 							setContactEmail(e.target.value);
 							validateFields();
 						}}
-						helperText={
-							errors["contactEmail"] ? "Please input a contact email" : ""
-						}
-						error={errors["contactEmail"]}
 					/>
 					<TextField
 						label="Contact Person Name"

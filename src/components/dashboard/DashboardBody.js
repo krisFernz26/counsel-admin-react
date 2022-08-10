@@ -9,6 +9,9 @@ import CounselorUsersBody from "../counselor/CounselorUsersBody";
 import CounselorAppointmentsBody from "../counselor/CounselorAppointmentsBody";
 import CounselorNotesBody from "../counselor/CounselorNotesBody";
 import CounselorSchedulesBody from "../counselor/CounselorSchedulesBody";
+import StudentUsersBody from "../student/StudentUsersBody";
+import StudentAppointmentsBody from "../student/StudentAppointmentsBody";
+import StudentNotesBody from "../student/StudentNotesBody";
 
 export default function DashboardBody(props) {
 	return (
@@ -33,13 +36,13 @@ export default function DashboardBody(props) {
 			) : (
 				""
 			)}
-			{props.currentPage["students-users"] ? <div>Students Users</div> : ""}
+			{props.currentPage["students-users"] ? <StudentUsersBody /> : ""}
 			{props.currentPage["students-appointments"] ? (
-				<div>Students Appointments</div>
+				<StudentAppointmentsBody />
 			) : (
 				""
 			)}
-			{props.currentPage["students-notes"] ? <div>Students Notes</div> : ""}
+			{props.currentPage["students-notes"] ? <StudentNotesBody /> : ""}
 			{props.currentPage["terms"] ? <div>Terms of service</div> : ""}
 			{props.currentPage["policies"] ? <div>Policies</div> : ""}
 		</Box>

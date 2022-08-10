@@ -10,6 +10,7 @@ import ContactView from "./routes/ContactView";
 import DashboardView from "./routes/DashboardView";
 
 import React from "react";
+import CounselorInfoBody from "./components/counselor/CounselorInfoBody";
 
 export default function App() {
 	let [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -62,6 +63,7 @@ export default function App() {
 							path="dashboard"
 							element={<DashboardView logout={logout} />}
 						/>
+						<Route path="counselors/:id" element={<CounselorInfoBody />} />
 					</Routes>
 				</ThemeProvider>
 			</div>

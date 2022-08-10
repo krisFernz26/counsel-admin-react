@@ -14,6 +14,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import Moment from "moment";
 import apiClient from "../../services/api";
 import UserUpdateModal from "../global/UserUpdateModal";
+import { Link } from "react-router-dom";
 
 export default function CounselorUsersTable() {
 	const [users, setUsers] = useState([]);
@@ -77,6 +78,11 @@ export default function CounselorUsersTable() {
 			headerName: "Full name",
 			sortable: false,
 			flex: 1,
+			renderCell: (params) => (
+				<Link to={"/counselors/" + params.row.id}>
+					{params.row.firstName + " " + params.row.lastName}
+				</Link>
+			),
 		},
 		{
 			field: "userName",

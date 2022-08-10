@@ -5,6 +5,10 @@ import Profile from "../profile/Profile";
 import AdminBody from "../admin/AdminBody";
 import InstitutionUsersBody from "../institution/InstitutionUsersBody";
 import InstitutionsBody from "../institution/InstitutionsBody";
+import CounselorUsersBody from "../counselor/CounselorUsersBody";
+import CounselorAppointmentsBody from "../counselor/CounselorAppointmentsBody";
+import CounselorNotesBody from "../counselor/CounselorNotesBody";
+import CounselorSchedulesBody from "../counselor/CounselorSchedulesBody";
 
 export default function DashboardBody(props) {
 	return (
@@ -17,15 +21,15 @@ export default function DashboardBody(props) {
 			{props.currentPage["institutions-users"] ? <InstitutionUsersBody /> : ""}
 			{props.currentPage["institutions-all"] ? <InstitutionsBody /> : ""}
 
-			{props.currentPage["counselors-users"] ? <div>Counselors Users</div> : ""}
+			{props.currentPage["counselors-users"] ? <CounselorUsersBody /> : ""}
 			{props.currentPage["counselors-appointments"] ? (
-				<div>Counselors Appointments</div>
+				<CounselorAppointmentsBody />
 			) : (
 				""
 			)}
-			{props.currentPage["counselors-notes"] ? <div>Counselors Notes</div> : ""}
+			{props.currentPage["counselors-notes"] ? <CounselorNotesBody /> : ""}
 			{props.currentPage["counselors-schedules"] ? (
-				<div>Counselors Schedules</div>
+				<CounselorSchedulesBody />
 			) : (
 				""
 			)}

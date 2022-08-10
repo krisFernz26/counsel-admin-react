@@ -13,13 +13,13 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import Moment from "moment";
 import apiClient from "../../services/api";
-import InstitutionUpdateModal from "./InstitutionUpdateModal";
+import UserUpdateModal from "../global/UserUpdateModal";
 
-export default function InstitutionsTable() {
-	const [institutions, setInstitutions] = useState([]);
+export default function CounselorUsersTable() {
+	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-	const [institutionId, setInsitutionId] = useState("");
+	const [userId, setUserId] = useState("");
 	const [updateModalOpen, setUpdateModalOpen] = useState(false);
 	const [successUpdateDialogOpen, setSuccessUpdateDialogOpen] = useState(false);
 	const [deleteSuccessDialogOpen, setDeleteSuccessDialogOpen] = useState(false);
@@ -28,70 +28,66 @@ export default function InstitutionsTable() {
 		accepts: "application/json",
 		Authorization: `Bearer ${token}`,
 	};
-	const getInstitutions = () => {
+	const getUsers = () => {
 		apiClient
-			.get("/api/institutions", {
+			.get("/api/users?role_id=3", {
 				headers: headers,
 			})
 			.then((res) => {
-				setInstitutions(res.data);
-				// console.log(res.data.data);
+				setUsers(res.data);
 				setLoading(false);
 			});
 	};
 	useEffect(() => {
 		setLoading(true);
-		getInstitutions();
+		getUsers();
 	}, []);
 	const columns = [
 		{ field: "id", headerName: "ID", flex: 0.5 },
 		{
-			field: "name",
-			headerName: "Name",
+			field: "institution",
+			headerName: "Institution",
 			sortable: true,
 			editable: false,
 			flex: 1,
 		},
 		{
-			field: "contactPerson",
-			headerName: "Contact Person",
+			field: "email",
+			headerName: "Email",
 			sortable: true,
 			editable: false,
 			flex: 1,
 		},
 		{
-			field: "contactPersonNumber",
-			headerName: "Contact Person No.",
+			field: "firstName",
+			headerName: "First name",
 			sortable: true,
 			editable: false,
 			flex: 1,
 		},
 		{
-			field: "contactNumber",
-			headerName: "Contact No.",
+			field: "lastName",
+			headerName: "Last name",
 			sortable: true,
 			editable: false,
 			flex: 1,
 		},
 		{
-			field: "contactEmail",
-			headerName: "Contact Email",
-			sortable: true,
-			editable: false,
+			field: "fullName",
+			headerName: "Full name",
+			sortable: false,
 			flex: 1,
 		},
 		{
-			field: "approvedAt",
-			headerName: "Approved At",
-			sortable: true,
+			field: "userName",
+			headerName: "Username",
 			editable: false,
 			flex: 1,
 		},
 		{
 			field: "createdAt",
-			headerName: "Created At",
+			headerName: "Registered On",
 			sortable: true,
-			editable: false,
 			flex: 1,
 			type: "date",
 		},
@@ -99,16 +95,7 @@ export default function InstitutionsTable() {
 			field: "address",
 			headerName: "Address",
 			sortable: true,
-			editable: false,
 			flex: 1,
-		},
-		{
-			field: "numberOfUsers",
-			headerName: "No. of Users",
-			sortable: true,
-			editable: false,
-			flex: 1,
-			// type: "number",
 		},
 		{
 			field: "actions",
@@ -124,7 +111,7 @@ export default function InstitutionsTable() {
 							<Button
 								color="success"
 								onClick={() => {
-									setInsitutionId(params.id);
+									setUserId(params.id);
 									handleOnUpdateButtonClick();
 								}}
 							>
@@ -133,7 +120,7 @@ export default function InstitutionsTable() {
 							<Button
 								color="error"
 								onClick={() => {
-									setInsitutionId(params.id);
+									setUserId(params.id);
 									handleOnDeleteButtonClick();
 								}}
 							>
@@ -145,18 +132,17 @@ export default function InstitutionsTable() {
 			},
 		},
 	];
-	const rows = institutions.map((institution) => {
+	const rows = users.map((user) => {
 		return {
-			id: institution.id,
-			name: institution.name,
-			approvedAt: institution.approved_at,
-			contactPerson: institution.contact_person_name,
-			contactPersonNumber: institution.contact_person_no,
-			contactNumber: institution.contact_no,
-			contactEmail: institution.contact_email,
-			createdAt: Moment(institution.created_at).format("MMM Do, YYYY"),
-			address: institution.address,
-			numberOfUsers: institution.users.length,
+			id: user.id,
+			institution: user.institution.name,
+			email: user.email,
+			firstName: user.first_name,
+			lastName: user.last_name,
+			fullName: user.first_name + " " + user.last_name,
+			userName: user.username,
+			createdAt: Moment(user.created_at).format("MMM Do, YYYY"),
+			address: user.address,
 		};
 	});
 
@@ -167,65 +153,46 @@ export default function InstitutionsTable() {
 		setUpdateModalOpen(true);
 	};
 	const handleOnUpdateModalClose = () => {
-		setInsitutionId("");
+		setUserId("");
 		setUpdateModalOpen(false);
 	};
 	const handleOnDeleteDialogClose = () => {
-		setInsitutionId("");
+		setUserId("");
 		setDeleteDialogOpen(false);
 	};
 	const handleOnUpdateSuccessDialogClose = () => {
-		setInsitutionId("");
+		setUserId("");
 		setSuccessUpdateDialogOpen(false);
 	};
 	const handleOnDeleteSuccessDialogClose = () => {
-		setInsitutionId("");
+		setUserId("");
 		setDeleteSuccessDialogOpen(false);
 	};
 	const deleteUser = (id) => {
 		setLoading(true);
 		apiClient
-			.delete(`/api/institutions/${id}`, {
+			.delete(`/api/users/${id}`, {
 				headers: headers,
 			})
 			.then((res) => {
-				getInstitutions();
+				getUsers();
 				setLoading(false);
 				setDeleteDialogOpen(false);
 				setDeleteSuccessDialogOpen(true);
 			});
 	};
-	const updateInstitution = (data) => {
+	const updateUser = (data) => {
 		setLoading(true);
 		apiClient
-			.put(`/api/institutions/${institutionId}`, data, {
+			.put(`/api/users/${userId}`, data, {
 				headers: headers,
 			})
 			.then((res) => {
-				getInstitutions();
+				getUsers();
 				setLoading(false);
 				setUpdateModalOpen(false);
 				setSuccessUpdateDialogOpen(true);
 			});
-	};
-	const approveInstitution = () => {
-		setLoading(true);
-		if (validateFields()) {
-			apiClient
-				.put(
-					`/api/institutions/${institutionId}/approve`,
-					{},
-					{
-						headers: headers,
-					}
-				)
-				.then((res) => {
-					getInstitutions();
-					setLoading(false);
-					setUpdateModalOpen(false);
-					setSuccessUpdateDialogOpen(true);
-				});
-		}
 	};
 	return (
 		<Box
@@ -245,7 +212,7 @@ export default function InstitutionsTable() {
 				aria-describedby="alert-dialog-description"
 			>
 				<DialogTitle id="alert-dialog-title">
-					{"Institution updated"}
+					{"User account updated"}
 				</DialogTitle>
 				<DialogActions>
 					<Button onClick={handleOnUpdateSuccessDialogClose} color="success">
@@ -253,13 +220,12 @@ export default function InstitutionsTable() {
 					</Button>
 				</DialogActions>
 			</Dialog>
-			{institutionId ? (
-				<InstitutionUpdateModal
-					institutionId={institutionId}
+			{userId ? (
+				<UserUpdateModal
+					userId={userId}
 					handleOnUpdateModalClose={handleOnUpdateModalClose}
 					updateModalOpen={updateModalOpen}
-					updateInstitution={updateInstitution}
-					approveInstitution={approveInstitution}
+					updateUser={updateUser}
 				/>
 			) : (
 				""
@@ -271,7 +237,7 @@ export default function InstitutionsTable() {
 				aria-describedby="alert-dialog-description"
 			>
 				<DialogTitle id="alert-dialog-title">
-					{"Institution deleted"}
+					{"User account deleted"}
 				</DialogTitle>
 				<DialogActions>
 					<Button onClick={handleOnDeleteSuccessDialogClose} color="success">
@@ -286,11 +252,11 @@ export default function InstitutionsTable() {
 				aria-describedby="alert-dialog-description"
 			>
 				<DialogTitle id="alert-dialog-title">
-					{"Delete institution?"}
+					{"Delete admin account?"}
 				</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">
-						Are you sure you want to delete this institution?
+						Are you sure you want to delete this user account?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
@@ -299,7 +265,7 @@ export default function InstitutionsTable() {
 					</Button>
 					<Button
 						onClick={() => {
-							deleteUser(institutionId);
+							deleteUser(userId);
 						}}
 						color="error"
 					>

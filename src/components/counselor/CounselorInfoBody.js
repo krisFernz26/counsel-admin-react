@@ -48,5 +48,7 @@ export default function CounselorInfoBody() {
 		// appointments < array > (id appointment_status_id student_id counselor_id link date start_time end_time created_at updated_at)
 		// media
 		<Box>{user.first_name + " " + user.last_name}</Box>
+		// TODO: Create global component for userinfo, appointments, notes
+		// TODO: Create component for counselor schedules
 	);
 }

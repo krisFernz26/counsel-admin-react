@@ -264,7 +264,7 @@ export default function InstitutionUserCreateForm() {
 						/>
 					</LocalizationProvider>
 					<Button variant="outlined" onClick={onSubmit}>
-						Create new institution user account
+						Create new user account
 					</Button>
 				</Stack>
 			)}

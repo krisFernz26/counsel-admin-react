@@ -80,6 +80,16 @@ export default function InstitutionUpdateModal({
 			setErrorAlert({ value: true, message: "Input correct data" });
 		}
 	};
+
+	const onApprove = () => {
+		if (validateFields()) {
+			approveInstitution();
+			handleOnUpdateModalClose();
+		} else {
+			//   console.log(institutionInfo)
+			setErrorAlert({ value: true, message: "Input correct data" });
+		}
+	};
 	return (
 		<>
 			<Modal
@@ -228,11 +238,7 @@ export default function InstitutionUpdateModal({
 								}}
 							/>
 							{institutionInfo["approved_at"] === null ? (
-								<Button
-									variant="outlined"
-									color="success"
-									onClick={approveInstitution}
-								>
+								<Button variant="outlined" color="success" onClick={onApprove}>
 									Approve institution
 								</Button>
 							) : (

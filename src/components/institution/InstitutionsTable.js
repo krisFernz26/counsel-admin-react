@@ -210,22 +210,20 @@ export default function InstitutionsTable() {
 	};
 	const approveInstitution = () => {
 		setLoading(true);
-		if (validateFields()) {
-			apiClient
-				.put(
-					`/api/institutions/${institutionId}/approve`,
-					{},
-					{
-						headers: headers,
-					}
-				)
-				.then((res) => {
-					getInstitutions();
-					setLoading(false);
-					setUpdateModalOpen(false);
-					setSuccessUpdateDialogOpen(true);
-				});
-		}
+		console.log(headers);
+		apiClient
+			.put(
+				`/api/institutions/${institutionId}/approve`,
+				{},
+				{
+					headers: headers,
+				}
+			)
+			.then((res) => {
+				getInstitutions();
+				setLoading(false);
+				setSuccessUpdateDialogOpen(true);
+			});
 	};
 	return (
 		<Box

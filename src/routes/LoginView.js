@@ -24,7 +24,8 @@ export default function LoginView(props) {
 			password: isEmpty(password) || !isLength(password, { min: 8 }),
 		});
 	};
-	const login = () => {
+	const login = (ev) => {
+		ev.preventDefault();
 		validateFields();
 		if (!(errors["email"] && errors["password"])) {
 			setLoading(true);

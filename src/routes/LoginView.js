@@ -48,7 +48,6 @@ export default function LoginView(props) {
 					});
 			});
 		}
-		// axios.defaults.headers.post["X-CSRF-Token"] = response.data._csrf;
 	};
 	return (
 		<div id="login-view" className="body">
